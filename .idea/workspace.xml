@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="33dc93bc-36a3-41bb-a04a-b86d2665113a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/google/codeu/data/Datastore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/google/codeu/data/Datastore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageFeedServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageFeedServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/google/codeu/servlets/MessageFeedServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/google/codeu/servlets/MessageFeedServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT/WEB-INF/appengine-generated/datastore-indexes-auto.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT/WEB-INF/appengine-generated/datastore-indexes-auto.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT/WEB-INF/classes/com/google/codeu/data/Datastore.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT/WEB-INF/classes/com/google/codeu/data/Datastore.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT/WEB-INF/classes/com/google/codeu/servlets/MessageFeedServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/codeu-starter-project-0.0.1-SNAPSHOT/WEB-INF/classes/com/google/codeu/servlets/MessageFeedServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,22 +29,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageFeedServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+            <state relative-caret-position="630">
+              <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#581#582#0" expanded="true" />
+                <element signature="e#624#625#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/google/codeu/data/Datastore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1830">
+            <state relative-caret-position="1127">
               <caret line="122" column="16" selection-start-line="122" selection-start-column="16" selection-end-line="122" selection-end-column="16" />
               <folding>
                 <element signature="e#0#3841#0" expanded="true" />
@@ -70,8 +78,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageFeedServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/google/codeu/data/Datastore.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageFeedServlet.java" />
       </list>
     </option>
   </component>
@@ -157,7 +165,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551036950562" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551039051200" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
@@ -253,32 +261,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-84">
-          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageFeedServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/google/codeu/data/Datastore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1830">
+        <state relative-caret-position="1127">
           <caret line="122" column="16" selection-start-line="122" selection-start-column="16" selection-end-line="122" selection-end-column="16" />
           <folding>
             <element signature="e#0#3841#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1335#1336#0" expanded="true" />
             <element signature="e#1402#1403#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="65" column="3" lean-forward="true" selection-start-line="65" selection-start-column="3" selection-end-line="65" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/google/codeu/servlets/MessageFeedServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#581#582#0" expanded="true" />
+            <element signature="e#624#625#0" expanded="true" />
           </folding>
         </state>
       </provider>
