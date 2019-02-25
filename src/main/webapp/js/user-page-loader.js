@@ -69,7 +69,7 @@ function fetchMessages() {
 }
 
 /** Fetches about me and displays onto page. */
-function fetchAboutMe(){
+function fetchAboutMe() {
   const url = '/about?user=' + parameterUsername;
   fetch(url)
       .then((response) => {
@@ -77,7 +77,7 @@ function fetchAboutMe(){
       })
       .then((aboutMe) => {
         const aboutMeContainer = document.getElementById('about-me-container');
-        if(aboutMe == ''){
+        if (aboutMe == ''){
           aboutMe = 'This user has not entered any information yet.';
         }
         aboutMeContainer.innerHTML = aboutMe;
