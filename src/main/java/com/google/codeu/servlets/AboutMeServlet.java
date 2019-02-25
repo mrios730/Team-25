@@ -29,13 +29,13 @@ public class AboutMeServlet extends HttpServlet {
   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
-  throws IOException {
+    throws IOException {
 
     response.setContentType("text/html");
   
     String user = request.getParameter("user");
   
-    if(user == null || user.equals("")) {
+    if (user == null || user.isEmpty()) {
       // Request is invalid, return empty response
       return;
     }
@@ -47,7 +47,7 @@ public class AboutMeServlet extends HttpServlet {
  
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
-  throws IOException {
+    throws IOException {
 
     UserService userService = UserServiceFactory.getUserService();  
     if (!userService.isUserLoggedIn()) {
