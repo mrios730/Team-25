@@ -59,7 +59,6 @@ public class Message {
     return timestamp;
   }
 
-  //Added a getRecipient() fubction that provides access to the field
   public String getRecipient(){
     return recipient;
   }
