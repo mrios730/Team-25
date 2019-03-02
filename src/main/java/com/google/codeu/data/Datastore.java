@@ -56,9 +56,9 @@ public class Datastore {
   public List<Message> getMessages(String user) {
 
     Query query =
-            new Query("Message")
-                    .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-                    .addSort("timestamp", SortDirection.DESCENDING);
+      new Query("Message")
+        .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+        .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     return getMessages(results);
   }
@@ -66,7 +66,7 @@ public class Datastore {
   public List<Message> getAllMessages(){
 
     Query query = new Query("Message")
-            .addSort("timestamp", SortDirection.DESCENDING);
+      .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     return getMessages(results);
   }
