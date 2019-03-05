@@ -6,8 +6,8 @@ public class User {
   private String aboutMe;
 
   public User (String email, String aboutMe) {
-    this.email = email;
-    this.aboutMe = aboutMe;
+	  this.email = email;
+	  this.aboutMe = aboutMe;
   }
 
   public String getEmail() {
