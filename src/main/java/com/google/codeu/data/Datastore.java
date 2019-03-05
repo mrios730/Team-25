@@ -119,4 +119,23 @@ public class Datastore {
   
     return user;
   }
+
+  /** Returns the total number of users. */
+  public int getTotalUserCount() {
+    Set<String> allUsers = new HashSet<String>();
+
+    // Gets every user who has written an "about me" profile.
+    Query userQuery = new Query("User");
+    for (Entity entity : datastore.prepare(userQuery).asIterable()) {
+      allUsers.add((String) entity.getProperty("email"));
+    }
+
+    // Gets every user who has sent a message.
+    Query messageQuery = new Query("Message");
+    for (Entity entity : datastore.prepare(messageQuery).asIterable()) {
+      allUsers.add((String) entity.getProperty("user"));
+    }
+
+    return allUsers.size();
+  }
 }
