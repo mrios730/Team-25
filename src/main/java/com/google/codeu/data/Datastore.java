@@ -45,6 +45,7 @@ public class Datastore {
     messageEntity.setProperty("user", message.getUser());
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("recipient", message.getRecipient());
 
     datastore.put(messageEntity);
   }
@@ -70,8 +71,9 @@ public class Datastore {
         UUID id = UUID.fromString(idString);
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
+        String recipient = (String) entity.getProperty("recipient");
 
-        Message message = new Message(id, user, text, timestamp);
+        Message message = new Message(id, user, text, timestamp, recipient);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
@@ -90,15 +92,31 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-  /** Returns the total number of users. */
-  public int getTotalUserCount() {
-    Query query = new Query("Message");
-    Set<String> allUsers = new HashSet<String>();
+   /** Stores the User in Datastore. */
+  public void storeUser(User user) {
+    Entity userEntity = new Entity("User", user.getEmail());
+    userEntity.setProperty("email", user.getEmail());
+    userEntity.setProperty("aboutMe", user.getAboutMe());
+    datastore.put(userEntity);
+  }
+ 
+  /**
+    * Returns the User owned by the email address, or
+    * null if no matching User was found.
+    */
+  public User getUser(String email) {
+ 
+    Query query = new Query("User")
+        .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
-    for (Entity entity : results.asIterable()) {
-        String user = (String) entity.getProperty("user");
-        allUsers.add(user);
+    Entity userEntity = results.asSingleEntity();
+    if(userEntity == null) {
+      return null;
     }
-    return allUsers.size();
+  
+    String aboutMe = (String) userEntity.getProperty("aboutMe");
+    User user = new User(email, aboutMe);
+  
+    return user;
   }
 }
