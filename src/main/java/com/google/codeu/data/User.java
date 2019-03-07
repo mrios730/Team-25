@@ -1,4 +1,6 @@
-/** User class **/
+/** 
+ * User class
+ */
 package com.google.codeu.data;
 
 public class User {
@@ -10,7 +12,8 @@ public class User {
 	  this.aboutMe = aboutMe;
   }
 
-  public String getEmail() {
+  
+  public String getEmail(){
     return email;
   }
 
