@@ -27,10 +27,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -53,7 +52,7 @@ public class MessageServlet extends HttpServlet {
 
     String user = request.getParameter("user");
 
-    if (isEmpty(user)) {
+    if (StringUtils.isEmpty(user)) {
       // Request is invalid, return empty array
       response.getWriter().println("[]");
       return;
