@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
@@ -47,12 +49,11 @@ public class MessageServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     response.setContentType("application/json");
 
     String user = request.getParameter("user");
 
-    if (user == null || user.equals("")) {
+    if (isEmpty(user)) {
       // Request is invalid, return empty array
       response.getWriter().println("[]");
       return;
@@ -61,14 +62,12 @@ public class MessageServlet extends HttpServlet {
     List<Message> messages = datastore.getMessages(user);
     Gson gson = new Gson();
     String json = gson.toJson(messages);
-
     response.getWriter().println(json);
   }
 
   /** Stores a new {@link Message}. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/index.html");
