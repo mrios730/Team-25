@@ -56,15 +56,25 @@ public class Datastore {
    * @return a list of messages received by the user, or empty list if user has never received a
    *     message. List is sorted by time descending.
    */
-  public List<Message> getMessagesByRecipient(String recipient) {
+
+  public List<Message> getAllMessages(){
     List<Message> messages = new ArrayList<>();
-
-    Query query =
-        new Query("Message")
-            .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
-            .addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Message")
+        .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
+    return getMessages(results);
+  }
 
+  public List<Message> getMessagesByRecipient(String recipient) {
+    Query query = new Query("Message")
+        .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
+        .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    return getMessages(results);
+  }
+
+  public List<Message> getMessages(PreparedQuery results) {
+    List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       try {
         String idString = entity.getKey().getName();
@@ -72,7 +82,7 @@ public class Datastore {
         String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
-
+        String recipient = (String) entity.getProperty("recipient");
         Message message = new Message(id, user, text, timestamp, recipient);
         messages.add(message);
       } catch (Exception e) {
@@ -81,7 +91,6 @@ public class Datastore {
         e.printStackTrace();
       }
     }
-
     return messages;
   }
 
