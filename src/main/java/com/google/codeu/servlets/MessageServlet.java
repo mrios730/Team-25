@@ -27,6 +27,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
@@ -52,7 +53,7 @@ public class MessageServlet extends HttpServlet {
 
     String user = request.getParameter("user");
 
-    if (user == null || user.equals("")) {
+    if (StringUtils.isEmpty(user)) {
       // Request is invalid, return empty array
       response.getWriter().println("[]");
       return;
