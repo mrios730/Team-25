@@ -57,7 +57,7 @@ public class Datastore {
    *     message. List is sorted by time descending.
    */
 
-  public List<Message> getAllMessages(){
+  public List<Message> getAllMessages() {
     List<Message> messages = new ArrayList<>();
     Query query = new Query("Message")
         .addSort("timestamp", SortDirection.DESCENDING);
@@ -65,6 +65,7 @@ public class Datastore {
     return getMessages(results);
   }
 
+  /* Will get messages filtered by a specific recipient */
   public List<Message> getMessagesByRecipient(String recipient) {
     Query query = new Query("Message")
         .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
@@ -73,6 +74,7 @@ public class Datastore {
     return getMessages(results);
   }
 
+  /*Retrieve all message given a query*/
   public List<Message> getMessages(PreparedQuery results) {
     List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
