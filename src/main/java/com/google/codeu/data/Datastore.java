@@ -56,6 +56,7 @@ public class Datastore {
     PreparedQuery results = datastore.prepare(query);
     return getMessages(results);
   }
+
   /**
    * Gets messages received by a specific user.
    *

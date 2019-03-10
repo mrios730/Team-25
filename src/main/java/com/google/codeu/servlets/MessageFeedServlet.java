@@ -24,7 +24,6 @@ public class MessageFeedServlet extends HttpServlet {
   /** Responds with a JSON representation of Message data for all users. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     response.setContentType("application/json");
 
     List<Message> messages = datastore.getAllMessages();
