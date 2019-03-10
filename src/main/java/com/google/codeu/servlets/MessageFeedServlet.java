@@ -1,5 +1,7 @@
 package com.google.codeu.servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
@@ -25,11 +27,15 @@ public class MessageFeedServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-
+    // If user is not logged in, they are redirected to home
+    UserService userService = UserServiceFactory.getUserService();
+    if (!userService.isUserLoggedIn()) {
+      response.sendRedirect("/index.html");
+      return;
+    }
     List<Message> messages = datastore.getAllMessages();
     Gson gson = new Gson();
     String json = gson.toJson(messages);
-
     response.getOutputStream().println(json);
   }
 }
