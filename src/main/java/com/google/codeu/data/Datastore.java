@@ -50,6 +50,13 @@ public class Datastore {
     datastore.put(messageEntity);
   }
 
+  /** Will retrieve every message ever sent. */
+  public List<Message> getAllMessages() {
+    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    return getMessages(results);
+  }
+
   /**
    * Gets messages received by a specific user.
    *
@@ -57,14 +64,17 @@ public class Datastore {
    *     message. List is sorted by time descending.
    */
   public List<Message> getMessagesByRecipient(String recipient) {
-    List<Message> messages = new ArrayList<>();
-
     Query query =
         new Query("Message")
             .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
+    return getMessages(results);
+  }
 
+  /** Retrieve all messages given a query. */
+  public List<Message> getMessages(PreparedQuery results) {
+    List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       try {
         String idString = entity.getKey().getName();
@@ -72,7 +82,7 @@ public class Datastore {
         String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
-
+        String recipient = (String) entity.getProperty("recipient");
         Message message = new Message(id, user, text, timestamp, recipient);
         messages.add(message);
       } catch (Exception e) {
@@ -81,7 +91,6 @@ public class Datastore {
         e.printStackTrace();
       }
     }
-
     return messages;
   }
 
@@ -92,7 +101,7 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-   /** Stores the User in Datastore. */
+  /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
@@ -100,16 +109,14 @@ public class Datastore {
     datastore.put(userEntity);
   }
 
-  /**
-    * Returns the User owned by the email address, or
-    * null if no matching User was found.
-    */
+  /** Returns the User owned by the email address, or null if no matching User was found. */
   public User getUser(String email) {
-    Query query = new Query("User")
-        .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+    Query query =
+        new Query("User")
+            .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
-    if(userEntity == null) {
+    if (userEntity == null) {
       return null;
     }
 
