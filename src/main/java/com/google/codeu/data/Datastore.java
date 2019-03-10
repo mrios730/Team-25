@@ -63,7 +63,7 @@ public class Datastore {
     return getMessages(results);
   }
 
-  /** Will get messages filtered by a specific recipient */
+  /** Will get messages filtered by a specific recipient. */
   public List<Message> getMessagesByRecipient(String recipient) {
     Query query =
         new Query("Message")
@@ -73,7 +73,7 @@ public class Datastore {
     return getMessages(results);
   }
 
-  /** Retrieve all message given a query */
+  /** Retrieve all message given a query. */
   public List<Message> getMessages(PreparedQuery results) {
     List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
