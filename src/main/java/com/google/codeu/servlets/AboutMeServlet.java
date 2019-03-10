@@ -12,8 +12,10 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+
 /**
  * Handles fetching and saving user data.
  */
@@ -38,7 +40,7 @@ public class AboutMeServlet extends HttpServlet {
   
     String user = request.getParameter("user");
   
-    if (user == null || user.isEmpty()) {
+    if (StringUtils.isEmpty(user)) {
       // Request is invalid, return empty response
       return;
     }

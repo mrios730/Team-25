@@ -50,20 +50,18 @@ public class Datastore {
     datastore.put(messageEntity);
   }
 
+  /** Will retrieve every message ever sent. */
+  public List<Message> getAllMessages() {
+    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    return getMessages(results);
+  }
   /**
    * Gets messages received by a specific user.
    *
    * @return a list of messages received by the user, or empty list if user has never received a
    *     message. List is sorted by time descending.
    */
-  public List<Message> getAllMessages() {
-    List<Message> messages = new ArrayList<>();
-    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-    return getMessages(results);
-  }
-
-  /** Will get messages filtered by a specific recipient. */
   public List<Message> getMessagesByRecipient(String recipient) {
     Query query =
         new Query("Message")
@@ -73,7 +71,7 @@ public class Datastore {
     return getMessages(results);
   }
 
-  /** Retrieve all message given a query. */
+  /** Retrieve all messages given a query. */
   public List<Message> getMessages(PreparedQuery results) {
     List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
