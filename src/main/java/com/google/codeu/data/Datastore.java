@@ -25,7 +25,9 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /** Provides access to the data stored in Datastore. */
@@ -48,29 +50,39 @@ public class Datastore {
     datastore.put(messageEntity);
   }
 
+  /** Will retrieve every message ever sent. */
+  public List<Message> getAllMessages() {
+    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    return getMessages(results);
+  }
+
   /**
-   * Gets messages posted by a specific user.
+   * Gets messages received by a specific user.
    *
-   * @return a list of messages posted by the user, or empty list if user has never posted a
+   * @return a list of messages received by the user, or empty list if user has never received a
    *     message. List is sorted by time descending.
    */
-  public List<Message> getMessages(String user) {
-    List<Message> messages = new ArrayList<>();
-
+  public List<Message> getMessagesByRecipient(String recipient) {
     Query query =
         new Query("Message")
-            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+            .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
+    return getMessages(results);
+  }
 
+  /** Retrieve all messages given a query. */
+  public List<Message> getMessages(PreparedQuery results) {
+    List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       try {
         String idString = entity.getKey().getName();
         UUID id = UUID.fromString(idString);
+        String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
         String recipient = (String) entity.getProperty("recipient");
-
         Message message = new Message(id, user, text, timestamp, recipient);
         messages.add(message);
       } catch (Exception e) {
@@ -79,43 +91,57 @@ public class Datastore {
         e.printStackTrace();
       }
     }
-
     return messages;
   }
 
   /** Returns the total number of messages for all users. */
-  public int getTotalMessageCount(){
+  public int getTotalMessageCount() {
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-   /** Stores the User in Datastore. */
+  /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
     datastore.put(userEntity);
   }
- 
-  /**
-    * Returns the User owned by the email address, or
-    * null if no matching User was found.
-    */
+
+  /** Returns the User owned by the email address, or null if no matching User was found. */
   public User getUser(String email) {
- 
-    Query query = new Query("User")
-        .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+    Query query =
+        new Query("User")
+            .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
-    if(userEntity == null) {
+    if (userEntity == null) {
       return null;
     }
-  
+
     String aboutMe = (String) userEntity.getProperty("aboutMe");
     User user = new User(email, aboutMe);
-  
+
     return user;
   }
 
+  /** Returns the total number of users. */
+  public int getTotalUserCount() {
+    Set<String> allUsers = new HashSet<String>();
+
+    // Gets every user who has written an "about me" profile.
+    Query userQuery = new Query("User");
+    for (Entity entity : datastore.prepare(userQuery).asIterable()) {
+      allUsers.add((String) entity.getProperty("email"));
+    }
+
+    // Gets every user who has sent a message.
+    Query messageQuery = new Query("Message");
+    for (Entity entity : datastore.prepare(messageQuery).asIterable()) {
+      allUsers.add((String) entity.getProperty("user"));
+    }
+
+    return allUsers.size();
+  }
 }
