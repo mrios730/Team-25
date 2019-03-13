@@ -42,6 +42,14 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
+  public void prepareMessageForDisplay(Message message){
+    String regex = "(https?://\\S+\\.(png|jpg))";
+    String replacement = "<img src=\"$1\" />";
+    String text = message.getText();
+    text = text.replaceAll(regex, replacement);
+    message.setText(text);
+  }
+
   /**
    * Responds with a JSON representation of {@link Message} data for a specific user. Responds with
    * an empty array if the user is not provided.
@@ -60,6 +68,10 @@ public class MessageServlet extends HttpServlet {
     }
 
     List<Message> messages = datastore.getMessagesByRecipient(user);
+
+    for (Message m : messages) {
+      prepareMessageForDisplay(m);
+    }
     Gson gson = new Gson();
     String json = gson.toJson(messages);
 
@@ -80,12 +92,7 @@ public class MessageServlet extends HttpServlet {
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String recipient = request.getParameter("recipient");
     
-    String regex = "(https?://\\S+\\.(png|jpg))";
-    String replacement = "<img src=\"$1\" />";
-    
-    String textWithImagesReplaced = text.replaceAll(regex, replacement);
-
-    Message message = new Message(user, textWithImagesReplaced, recipient);
+    Message message = new Message(user, text, recipient);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + recipient);
