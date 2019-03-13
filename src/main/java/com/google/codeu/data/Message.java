@@ -62,4 +62,8 @@ public class Message {
   public String getRecipient(){
     return recipient;
   }
+
+  public void setText(String text) {
+    this.text = text;
+  }
 }
