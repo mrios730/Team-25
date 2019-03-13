@@ -47,7 +47,7 @@ public class MessageServlet extends HttpServlet {
    * properly.
    */
   public void prepareMessageForDisplay(Message message) {
-    String regex = "(https?://\\S+\\.(png|jpg))";
+    String regex = "(https?://[\\S+\\.]+/([\\S+\\.?]+/?)+\\.(png|jpg|gif))";
     String replacement = "<img src=\"$1\" />";
     String text = message.getText();
     text = text.replaceAll(regex, replacement);
@@ -75,6 +75,7 @@ public class MessageServlet extends HttpServlet {
 
     for (Message m : messages) {
       prepareMessageForDisplay(m);
+      System.out.println("hello?");
     }
     Gson gson = new Gson();
     String json = gson.toJson(messages);
