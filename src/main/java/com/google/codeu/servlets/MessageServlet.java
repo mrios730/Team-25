@@ -75,7 +75,6 @@ public class MessageServlet extends HttpServlet {
 
     for (Message m : messages) {
       prepareMessageForDisplay(m);
-      System.out.println("hello?");
     }
     Gson gson = new Gson();
     String json = gson.toJson(messages);
