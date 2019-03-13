@@ -42,6 +42,10 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
+  /**
+   * Replaces messages with image links in order to display images
+   * properly.
+   */
   public void prepareMessageForDisplay(Message message) {
     String regex = "(https?://\\S+\\.(png|jpg))";
     String replacement = "<img src=\"$1\" />";
