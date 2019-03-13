@@ -42,7 +42,7 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  public void prepareMessageForDisplay(Message message){
+  public void prepareMessageForDisplay(Message message) {
     String regex = "(https?://\\S+\\.(png|jpg))";
     String replacement = "<img src=\"$1\" />";
     String text = message.getText();
