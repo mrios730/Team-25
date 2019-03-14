@@ -17,7 +17,7 @@ public class MessageServletTest {
     messageServlet = new MessageServlet();
   }
 
-  private void RunPrepareMessageForDisplayTest(String messageText, String expectedResult) {
+  private void runPrepareMessageForDisplayTest(String messageText, String expectedResult) {
     Message message = new Message("user1", messageText, "recipient1");
     messageServlet.prepareMessageForDisplay(message);
     assertEquals(expectedResult, message.getText());
@@ -25,7 +25,7 @@ public class MessageServletTest {
 
   @Test
   public void testPrepareMessageForDisplay() throws IOException, ServletException {
-    RunPrepareMessageForDisplayTest(
+    runPrepareMessageForDisplayTest(
         "This is the Google logo http://www.google.com/images/logo.png!",
         "This is the Google logo <img src=\"http://www.google.com/images/logo.png\" />!");
   }
