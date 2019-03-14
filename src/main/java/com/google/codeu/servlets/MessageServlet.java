@@ -47,8 +47,15 @@ public class MessageServlet extends HttpServlet {
    * properly.
    */
   public void prepareMessageForDisplay(Message message) {
-    String regex = "(https?://[\\S+\\.]+/([\\S+\\.?]+/?)+\\.(png|jpg|gif))";
-    String replacement = "<img src=\"$1\" />";
+    /**
+     * Pattern match for a caption and an image link.
+     * A valid format would be: 
+     *    [caption] https://link.domain/etc.pictureExtension
+     * The caption is optional and not including it will not
+     * affect the image display.
+     */
+    String regex = "(\\[.+\\])?\\s(https?://[\\S+\\.]+/([\\S+\\.?]+/?)+\\.(png|jpg|gif))";
+    String replacement = "<figure><img src=\"$2\" /> <figcaption>$1</figcaption></figure>";
     String text = message.getText();
     text = text.replaceAll(regex, replacement);
     message.setText(text);
