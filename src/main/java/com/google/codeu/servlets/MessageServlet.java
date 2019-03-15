@@ -47,14 +47,12 @@ public class MessageServlet extends HttpServlet {
    * properly.
    */
   public void prepareMessageForDisplay(Message message) {
-    /**
-     * Pattern match for a caption and an image link.
-     * A valid format would be: 
-     *    [caption] https://link.domain/etc.pictureExtension
-     * The caption is optional and not including it will not
-     * affect the image display.
-     */
+    // Matches URL of an image file, with an optional caption. For example:
+    //     [the google logo] http://www.google.com/images/logo.png
+    // Matched URLs must end with one of: .png, .jpg, .gif
     String regex = "(\\[.+\\])?\\s(https?://[\\S+\\.]+/([\\S+\\.?]+/?)+\\.(png|jpg|gif))";
+    
+    // Replaces the URL with the actual image. If a caption is given, it is printed below the image.
     String replacement = "<figure><img src=\"$2\" /> <figcaption>$1</figcaption></figure>";
     String text = message.getText();
     text = text.replaceAll(regex, replacement);
