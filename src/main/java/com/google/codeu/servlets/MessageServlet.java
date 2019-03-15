@@ -95,7 +95,14 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String recipient = request.getParameter("recipient");
-    
+
+    text = text.replace("[b]", "<strong>").replace("[/b]","</strong>");
+    text = text.replace("[i]", "<i>").replace("[/i]","</i>");
+    text = text.replace("[u]", "<ins>").replace("[/u]","</ins>");
+    text = text.replace("[s]", "<del>").replace("[/s]","</del>");
+
+    String sanitizeContent = Jsoup.clean(text, Whitelist.none().addTags("strong", "i", "ins"));
+
     Message message = new Message(user, text, recipient);
     datastore.storeMessage(message);
 
