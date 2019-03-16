@@ -60,7 +60,6 @@ public class MessageServlet extends HttpServlet {
   /**
    * Replaces messages with image links in order to display images
    * properly.
-   *
    * TODO: Migrate the code here to MessageTransformer implementations and delete this method.
    */
   public void prepareMessageForDisplay(Message message) {
