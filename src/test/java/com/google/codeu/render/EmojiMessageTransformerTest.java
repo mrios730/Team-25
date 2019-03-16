@@ -20,7 +20,7 @@ public class EmojiMessageTransformerTest {
   }
 
   @Test
-  public void test() {
+  public void testTransformText() {
     runTransformTextTest("", "");
     runTransformTextTest(":-)", "😀");
     runTransformTextTest(

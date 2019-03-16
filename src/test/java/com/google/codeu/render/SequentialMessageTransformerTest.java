@@ -14,7 +14,7 @@ public class SequentialMessageTransformerTest {
     // Constructs the class under test.
     MessageTransformer messageTransformer = new SequentialMessageTransformer(Arrays.asList());
 
-    assertEquals("mock output 3", messageTransformer.transformText("an input text"));
+    assertEquals("some input", messageTransformer.transformText("some input"));
   }
 
   @Test
