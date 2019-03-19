@@ -26,6 +26,7 @@ public class Message {
   private String text;
   private long timestamp;
   private String recipient;
+  private String image;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content and received by {@code recipient}.
@@ -65,5 +66,9 @@ public class Message {
 
   public void setText(String text) {
     this.text = text;
+  }
+
+  public void setImageUrl(String image){
+    this.image = image;
   }
 }
