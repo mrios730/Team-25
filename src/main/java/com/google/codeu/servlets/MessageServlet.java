@@ -31,6 +31,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
+import java.util.Map;
+
+
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
@@ -50,13 +59,11 @@ public class MessageServlet extends HttpServlet {
     // Matches URL of an image file, with an optional caption. For example:
     //     [the google logo] http://www.google.com/images/logo.png
     // Matched URLs must end with one of: .png, .jpg, .gif
-    String regex = "(\\[\\S+\\]\\s)?(https?://(\\S+\\.\\S+)+/(.+\\.?)+\\.(png|jpe?g|gif))";
-    
+    String regex = "(\\[([^\\]]+)\\]\\s)?(https?://(\\S+\\.\\S+)+/(.+\\.?)+\\.(png|jpe?g|gif))";
     // Replaces the URL with the actual image. If a caption is given, it is printed below the image.
-    String replacement = "<figure><img src=\"$2\" /> <figcaption>$1</figcaption></figure>";
+    String replacement = "<figure><img src=\"$3\" /> <figcaption>$2</figcaption></figure>";
     String text = message.getText();
     text = text.replaceAll(regex, replacement);
-    System.out.println(text);
     message.setText(text);
   }
 
@@ -91,7 +98,6 @@ public class MessageServlet extends HttpServlet {
   /** Stores a new {@link Message}. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/index.html");
@@ -99,10 +105,25 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
+    // System.out.println("text: " + request.getParameter("text"));
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String recipient = request.getParameter("recipient");
     
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get("image");
+
     Message message = new Message(user, text, recipient);
+
+    if(blobKeys != null && !blobKeys.isEmpty()) {
+      BlobKey blobKey = blobKeys.get(0);
+      ImagesService imagesService = ImagesServiceFactory.getImagesService();
+      ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+      String imageUrl = imagesService.getServingUrl(options);
+      message.setImageUrl(imageUrl);
+    }
+
+
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + recipient);
