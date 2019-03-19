@@ -27,6 +27,9 @@ public class MessageServletTest {
   public void testPrepareMessageForDisplay() throws IOException, ServletException {
     runPrepareMessageForDisplayTest(
         "This is the Google logo http://www.google.com/images/logo.png!",
-        "This is the Google logo <img src=\"http://www.google.com/images/logo.png\" />!");
+        "This is the Google logo <figure><img src=\"http://www.google.com/images/logo.png\" /> <figcaption></figcaption></figure>!");
+    runPrepareMessageForDisplayTest(
+        "[This is the Google logo] http://www.google.com/images/logo.png!",
+        "<figure><img src=\"http://www.google.com/images/logo.png\" /> <figcaption>This is the Google logo</figcaption></figure>!");
   }
 }
