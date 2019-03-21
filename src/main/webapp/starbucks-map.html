@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Starbucks</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnvi8htmNmKQkmIMqiCu1KGgT3ikR6uO4"></script>
+  <script>  
+    function createStarbucksMap(){
+      fetch('/starbucks-map').then(function(response) {
+        return response.json();
+      }).then((Starbucks) => {
+          
+        const map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 40.7128, lng: -74.0060},
+          zoom: 14
+        });
+
+        Starbucks.forEach((Starbucks) => {
+          addLandmark(map, Starbucks.lat, Starbucks.lng, Starbucks.store_num);
+        });
+      });
+    }
+
+    //Add a red marker to each starbucks location
+    function addLandmark(map, lat, lng, store_num){
+      const marker = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: map,
+      }); 
+      //Will show the user the store number for each starbucks
+      var infoWindow = new google.maps.InfoWindow({
+        content: store_num
+      });
+      //Will close when the user clicks on it
+      marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+      });
+    }
+
+  </script>
+  <style>
+    #map{
+      width: 500px;
+      height: 500px;
+    }
+  </style>
+</head>
+<body onload="createStarbucksMap();">
+ <h1>Starbucks</h1>
+ <div id="map"></div>
+</body>
+</html>
