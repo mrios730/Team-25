@@ -14,16 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 public class MapServlet extends HttpServlet {
   JsonArray starbucksArray;
 
-	/**
-	 * init() will run once, creating and storing Starbucks objects with data from the
-	 * CSV file when the servlet is initialized.
-	 */
-	@Override
+  /**
+   * init() will run once, creating and storing Starbucks objects with data from the *CSV file when
+   * the servlet is initialized.
+   */
+  @Override
   public void init() {
     starbucksArray = new JsonArray();
     Gson gson = new Gson();
-    Scanner scanner = new Scanner(getServletContext()
-				.getResourceAsStream("/WEB-INF/starbucks-directory.csv"));
+    Scanner scanner =
+        new Scanner(getServletContext().getResourceAsStream("/WEB-INF/starbucks-directory.csv"));
     // Skip the first line (Column names)
     scanner.nextLine();
     while (scanner.hasNextLine()) {
@@ -37,19 +37,15 @@ public class MapServlet extends HttpServlet {
     scanner.close();
   }
 
-	/**
-	 * 	Send the json data when the user goes to "/starbucks-map".
-	 */
+  /** Send the json data when the user goes to "/starbucks-map". */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
     response.getOutputStream().println(starbucksArray.toString());
   }
 
-	/**
-	 * Starbucks class that allows each Starbucks to store its own info.
-	 */
-	private static class Starbucks {
+  /** Starbucks class that allows each Starbucks to store its own info. */
+  private static class Starbucks {
     String storeNumber;
     double lat;
     double lng;
