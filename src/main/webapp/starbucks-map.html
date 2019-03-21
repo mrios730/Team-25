@@ -8,29 +8,27 @@
       fetch('/starbucks-map').then(function(response) {
         return response.json();
       }).then((Starbucks) => {
-          
         const map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40.7128, lng: -74.0060},
           zoom: 14
         });
-
         Starbucks.forEach((Starbucks) => {
           addLandmark(map, Starbucks.lat, Starbucks.lng, Starbucks.storeNumber);
         });
       });
     }
 
-    //Add a red marker to each starbucks location
+    //Add a red marker for each starbucks location
     function addLandmark(map, lat, lng, storeNumber){
       const marker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map: map,
       }); 
-      //Will show the user the store number for each starbucks
+      //Will store the store number for each starbucks
       var infoWindow = new google.maps.InfoWindow({
         content: storeNumber
       });
-      //Will close when the user clicks on it
+      //Will show info window when the user clicks on that location
       marker.addListener('click', function() {
         infoWindow.open(map, marker);
       });
