@@ -15,20 +15,20 @@
         });
 
         Starbucks.forEach((Starbucks) => {
-          addLandmark(map, Starbucks.lat, Starbucks.lng, Starbucks.store_num);
+          addLandmark(map, Starbucks.lat, Starbucks.lng, Starbucks.storeNumber);
         });
       });
     }
 
     //Add a red marker to each starbucks location
-    function addLandmark(map, lat, lng, store_num){
+    function addLandmark(map, lat, lng, storeNumber){
       const marker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map: map,
       }); 
       //Will show the user the store number for each starbucks
       var infoWindow = new google.maps.InfoWindow({
-        content: store_num
+        content: storeNumber
       });
       //Will close when the user clicks on it
       marker.addListener('click', function() {

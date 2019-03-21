@@ -29,11 +29,11 @@ public class MapServlet extends HttpServlet {
 
       // System.out.println(cells[0] + ", " + cells[1] + ", " + cells[2]);
 
-      String store_num = cells[0];
+      String storeNumber = cells[0];
       double lat = Double.parseDouble(cells[2]);
       double lng = Double.parseDouble(cells[1]);
 
-      starbucksArray.add(gson.toJsonTree(new Starbucks(store_num, lat, lng)));
+      starbucksArray.add(gson.toJsonTree(new Starbucks(storeNumber, lat, lng)));
     }
     scanner.close();
   }
@@ -45,12 +45,12 @@ public class MapServlet extends HttpServlet {
   }
 
   private static class Starbucks {
-    String store_num;
+    String storeNumber;
     double lat;
     double lng;
 
-    private Starbucks(String name, double lat, double lng) {
-      this.store_num = name;
+    private Starbucks(String storeNumber, double lat, double lng) {
+      this.storeNumber = storeNumber;
       this.lat = lat;
       this.lng = lng;
     }
