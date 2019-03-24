@@ -48,6 +48,10 @@ public class Message {
     return id;
   }
 
+  public String getImageUrl() {
+    return imageURL;
+  }
+
   public String getUser() {
     return user;
   }
