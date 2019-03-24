@@ -12,8 +12,8 @@
           center: {lat: 40.7128, lng: -74.0060},
           zoom: 14
         });
-        starbucksArray.forEach((Starbucks) => {
-          addLandmark(map, Starbucks.lat, Starbucks.lng, Starbucks.storeNumber);
+        starbucksArray.forEach((starbucks) => {
+          addLandmark(map, starbucks.lat, starbucks.lng, starbucks.storeNumber);
         });
       });
     }
