@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Returns Starbucks locations data as a JSON array. */
 @WebServlet("/starbucks-map")
 public class MapServlet extends HttpServlet {
-  JsonArray starbucksArray;
+  private JsonArray starbucksArray;
 
   /**
    * init() will run once, creating and storing Starbucks objects with data from the *CSV file when
@@ -46,9 +46,9 @@ public class MapServlet extends HttpServlet {
 
   /** Starbucks class that allows each Starbucks to store its own info. */
   private static class Starbucks {
-    String storeNumber;
-    double lat;
-    double lng;
+    private String storeNumber;
+    private double lat;
+    private double lng;
 
     private Starbucks(String storeNumber, double lat, double lng) {
       this.storeNumber = storeNumber;
