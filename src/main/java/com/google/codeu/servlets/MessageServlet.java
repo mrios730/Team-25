@@ -55,6 +55,14 @@ public class MessageServlet extends HttpServlet {
     String replacement = "<figure><img src=\"$3\" /> <figcaption>$2</figcaption></figure>";
     String text = message.getText();
     text = text.replaceAll(regex, replacement);
+    //makes text bold
+    text = text.replace("[b]", "<strong>").replace("[/b]", "</strong>");
+    //makes text italic
+    text = text.replace("[i]", "<i>").replace("[/i]", "</i>");
+    //underlines text
+    text = text.replace("[u]", "<ins>").replace("[/u]", "</ins>");
+    //creates a strikethrough on text
+    text = text.replace("[s]", "<del>").replace("[/s]", "</del>");
     message.setText(text);
   }
 
@@ -99,7 +107,7 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String recipient = request.getParameter("recipient");
-    
+
     Message message = new Message(user, text, recipient);
     datastore.storeMessage(message);
 
