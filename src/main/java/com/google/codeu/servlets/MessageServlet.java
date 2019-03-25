@@ -42,10 +42,7 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  /**
-   * Replaces messages with image links in order to display images
-   * properly.
-   */
+  /** Replaces messages with image links in order to display images properly. */
   public void prepareMessageForDisplay(Message message) {
     // Matches URL of an image file, with an optional caption. For example:
     //     [the google logo] http://www.google.com/images/logo.png
@@ -55,13 +52,13 @@ public class MessageServlet extends HttpServlet {
     String replacement = "<figure><img src=\"$3\" /> <figcaption>$2</figcaption></figure>";
     String text = message.getText();
     text = text.replaceAll(regex, replacement);
-    //makes text bold
+    // makes text bold
     text = text.replace("[b]", "<strong>").replace("[/b]", "</strong>");
-    //makes text italic
+    // makes text italic
     text = text.replace("[i]", "<i>").replace("[/i]", "</i>");
-    //underlines text
+    // underlines text
     text = text.replace("[u]", "<ins>").replace("[/u]", "</ins>");
-    //creates a strikethrough on text
+    // creates a strikethrough on text
     text = text.replace("[s]", "<del>").replace("[/s]", "</del>");
     message.setText(text);
   }

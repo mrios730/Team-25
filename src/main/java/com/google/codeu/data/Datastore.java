@@ -145,10 +145,9 @@ public class Datastore {
     return allUsers.size();
   }
 
-  /**Retrieve markers that users have created on 'user map' page.*/
+  /** Retrieve markers that users have created on 'user map' page. */
   public List<UserMarker> getMarkers() {
     List<UserMarker> markers = new ArrayList<>();
-
     Query query = new Query("UserMarker");
     PreparedQuery results = datastore.prepare(query);
 
@@ -169,7 +168,7 @@ public class Datastore {
     return markers;
   }
 
-  /**Store any markers that users create on the 'User Map' page. */
+  /** Store any markers that users create on the 'User Map' page. */
   public void storeMarker(UserMarker marker) {
     Entity markerEntity = new Entity("UserMarker");
     markerEntity.setProperty("lat", marker.getLat());
