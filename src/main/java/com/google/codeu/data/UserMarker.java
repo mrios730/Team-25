@@ -1,5 +1,8 @@
 package com.google.codeu.data;
 
+/**
+ * Information entered by user's are stored in a UserMarker object that stores location and content.
+ */
 public class UserMarker {
 
   private double lat;

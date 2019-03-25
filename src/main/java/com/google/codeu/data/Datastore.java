@@ -156,7 +156,6 @@ public class Datastore {
         double lat = (double) entity.getProperty("lat");
         double lng = (double) entity.getProperty("lng");
         String content = (String) entity.getProperty("content");
-
         UserMarker marker = new UserMarker(lat, lng, content);
         markers.add(marker);
       } catch (Exception e) {
