@@ -19,6 +19,30 @@
       });
     }
 
+    //Displays markers created by users onto the map
+    function fetchMarkers(){
+      fetch('/user-markers').then((response) => {
+        return response.json();
+      }).then((markers) => {
+        markers.forEach((marker) => {
+          createMarkerForDisplay(marker.lat, marker.lng, marker.content)
+        });  
+      });
+    }
+
+    //Stores marker a user just created to Datastore
+    function postMarker(lat, lng, content){
+      const params = new URLSearchParams();
+      params.append('lat', lat);
+      params.append('lng', lng);
+      params.append('content', content);
+
+      fetch('/user-markers', {
+        method: 'POST',
+        body: formData
+      });
+    }
+
     //Allow user to add data to the map
     function createMarkerForDisplay(lat, lng, content){
       const marker = new google.maps.Marker({
