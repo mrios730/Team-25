@@ -15,7 +15,6 @@ import org.jsoup.safety.Whitelist;
 /** Handles fetching and saving UserMarker instances. */
 @WebServlet("/user-markers")
 public class UserMarkerServlet extends HttpServlet {
-
   private Datastore datastore;
 
   @Override
