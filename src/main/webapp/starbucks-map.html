@@ -7,13 +7,13 @@
     function createStarbucksMap(){
       fetch('/starbucks-map').then(function(response) {
         return response.json();
-      }).then((Starbucks) => {
+      }).then((starbucksArray) => {
         const map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40.7128, lng: -74.0060},
           zoom: 14
         });
-        Starbucks.forEach((Starbucks) => {
-          addLandmark(map, Starbucks.lat, Starbucks.lng, Starbucks.storeNumber);
+        starbucksArray.forEach((starbucks) => {
+          addLandmark(map, starbucks.lat, starbucks.lng, starbucks.storeNumber);
         });
       });
     }
