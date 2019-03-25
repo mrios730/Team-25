@@ -34,28 +34,6 @@
       });
     }
 
-    function fetchMarkers(){
-      fetch('/user-markers').then((response) => {
-        return response.json();
-      }).then((markers) => {
-        markers.forEach((marker) => {
-          createMarkerForDisplay(marker.lat, marker.lng, marker.content)
-        });  
-      });
-    }
-
-    function postMarker(lat, lng, content){
-      const params = new URLSearchParams();
-      params.append('lat', lat);
-      params.append('lng', lng);
-      params.append('content', content);
-
-      fetch('/user-markers', {
-        method: 'POST',
-        body: formData
-      });
-    }
-
   </script>
   <style>
     #map{
