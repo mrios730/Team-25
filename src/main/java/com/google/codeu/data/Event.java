@@ -1,4 +1,5 @@
 /** Event class */
+
 package com.google.codeu.data;
 
 public class Event {
@@ -12,7 +13,7 @@ public class Event {
   private String location;
 
   Event(String eventName, String description, String organizerNames, 
-    String eventDate, String eventTime, String location) {
+      String eventDate, String eventTime, String location) {
     this.eventName = eventName;
     this.description = description;
     this.organizerNames = organizerNames;
