@@ -38,11 +38,11 @@ function showMessageFormIfLoggedIn() {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn) {
-          const messageForm = document.getElementById('message-form');
-          messageForm.action = '/messages?recipient=' + parameterUsername;
-          messageForm.classList.remove('hidden');
+        if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
           document.getElementById('about-me-form').classList.remove('hidden');
+          const messageForm = document.getElementById('message-form');
+          messageForm.classList.remove('hidden');
+          document.getElementById('recipient-input').value = parameterUsername;
         }
       });
 }
