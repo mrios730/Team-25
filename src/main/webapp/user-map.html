@@ -17,7 +17,7 @@
       map.addListener('click', (event) => {
         createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
       });
-      fetchMarkers();ma
+      fetchMarkers();
     }
 
     // Displays markers created by users onto the map
@@ -26,7 +26,7 @@
         return response.json();
       }).then((markers) => {
         markers.forEach((marker) => {
-          createMarkerForDisplay(marker.lat, marker.lng, marker.content)
+          createMarkerForDisplay(marker.lat, marker.lng, marker.content);
         });  
       });
     }
@@ -40,20 +40,20 @@
 
       fetch('/user-markers', {
         method: 'POST',
-        body: formData
+        body: params
       });
     }
 
-    // Allow user to add data to the map
     function createMarkerForDisplay(lat, lng, content){
       const marker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map: map
       });
-                  
+              
       var infoWindow = new google.maps.InfoWindow({
         content: content
       });
+
       marker.addListener('click', () => {
         infoWindow.open(map, marker);
       });
@@ -61,10 +61,10 @@
 
     // Actually creates the marker
     function createMarkerForEdit(lat, lng){
-      //Allow only one marker at a time
       if (editMarker) { 
         editMarker.setMap(null); 
       }
+
       editMarker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map:map
@@ -73,7 +73,7 @@
       const infoWindow = new google.maps.InfoWindow({
         content: buildInfoWindowInput(lat, lng)
       });
-      //Close when the user closes the window
+
       google.maps.event.addListener(infoWindow, 'closeclick', () => {
         editMarker.setMap(null);
       });
@@ -87,6 +87,7 @@
       button.appendChild(document.createTextNode('Submit'));
 
       button.onclick = () => {
+        postMarker(lat, lng, textBox.value);
         createMarkerForDisplay(lat, lng, textBox.value);
         editMarker.setMap(null);
       };
