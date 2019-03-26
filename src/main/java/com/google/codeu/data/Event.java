@@ -2,9 +2,10 @@
 
 package com.google.codeu.data;
 
+import java.util.UUID;
+
 public class Event {
-  static int totalEvents = 0;
-  private int id;
+  private UUID id;
   private String eventName;
   private String description;
   private String organizerNames;
@@ -20,10 +21,10 @@ public class Event {
     this.eventDate = eventDate;
     this.eventTime = eventTime;
     this.location = location;
-    this.id = totalEvents++;
+    this.id = UUID.randomUUID();
   }
 
-  public int getId() {
+  public UUID getId() {
     return id;
   }
 
