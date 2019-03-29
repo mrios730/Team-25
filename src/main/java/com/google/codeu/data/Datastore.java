@@ -175,4 +175,17 @@ public class Datastore {
     markerEntity.setProperty("content", marker.getContent());
     datastore.put(markerEntity);
   }
+
+    /** Stores Event in Datastore. */
+  public void storeEvent(Event event) {
+    Entity eventEntity = new Entity("Event", event.getId().toString());
+    eventEntity.setProperty("eventName", event.getEventName());
+    eventEntity.setProperty("organizerNames", event.getOrganizerNames());
+    eventEntity.setProperty("eventDate", event.getEventDate());
+    eventEntity.setProperty("eventTime", event.getEventTime());
+    eventEntity.setProperty("location", event.getLocation());
+
+    datastore.put(eventEntity);
+  }
+
 }
