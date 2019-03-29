@@ -176,7 +176,7 @@ public class Datastore {
     datastore.put(markerEntity);
   }
 
-    /** Stores Event in Datastore. */
+  /** Stores Event in Datastore. */
   public void storeEvent(Event event) {
     Entity eventEntity = new Entity("Event", event.getId().toString());
     eventEntity.setProperty("eventName", event.getEventName());
