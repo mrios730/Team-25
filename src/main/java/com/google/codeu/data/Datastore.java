@@ -184,6 +184,7 @@ public class Datastore {
     eventEntity.setProperty("eventDate", event.getEventDate());
     eventEntity.setProperty("eventTime", event.getEventTime());
     eventEntity.setProperty("location", event.getLocation());
+    eventEntity.setProperty("description", event.getDescription());
 
     datastore.put(eventEntity);
   }
