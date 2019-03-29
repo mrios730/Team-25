@@ -144,4 +144,35 @@ public class Datastore {
 
     return allUsers.size();
   }
+
+  /** Retrieve markers that users have created on 'user map' page. */
+  public List<UserMarker> getMarkers() {
+    List<UserMarker> markers = new ArrayList<>();
+    Query query = new Query("UserMarker");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        double lat = (double) entity.getProperty("lat");
+        double lng = (double) entity.getProperty("lng");
+        String content = (String) entity.getProperty("content");
+        UserMarker marker = new UserMarker(lat, lng, content);
+        markers.add(marker);
+      } catch (Exception e) {
+        System.err.println("Error reading marker.");
+        System.err.println(entity.toString());
+        e.printStackTrace();
+      }
+    }
+    return markers;
+  }
+
+  /** Store any markers that users create on the 'User Map' page. */
+  public void storeMarker(UserMarker marker) {
+    Entity markerEntity = new Entity("UserMarker");
+    markerEntity.setProperty("lat", marker.getLat());
+    markerEntity.setProperty("lng", marker.getLng());
+    markerEntity.setProperty("content", marker.getContent());
+    datastore.put(markerEntity);
+  }
 }

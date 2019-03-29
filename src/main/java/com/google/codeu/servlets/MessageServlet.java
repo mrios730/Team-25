@@ -27,8 +27,12 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
+import com.google.codeu.render.EmojiMessageTransformer;
+import com.google.codeu.render.MessageTransformer;
+import com.google.codeu.render.SequentialMessageTransformer;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.annotation.WebServlet;
@@ -44,15 +48,27 @@ import org.jsoup.safety.Whitelist;
 public class MessageServlet extends HttpServlet {
 
   private Datastore datastore;
+  private MessageTransformer messageTransformer;
 
   @Override
   public void init() {
     datastore = new Datastore();
+    messageTransformer =
+        new SequentialMessageTransformer(Arrays.asList(new EmojiMessageTransformer()));
+  }
+
+  public void setDatastore(Datastore datastore) {
+    this.datastore = datastore;
+  }
+
+  public void setMessageTransformer(MessageTransformer messageTransformer) {
+    this.messageTransformer = messageTransformer;
   }
 
   /**
    * Replaces messages with image links in order to display images
    * properly.
+   * TODO: Migrate the code here to MessageTransformer implementations and delete this method.
    */
   public void prepareMessageForDisplay(Message message) {
     // Matches URL of an image file, with an optional caption. For example:
@@ -63,6 +79,14 @@ public class MessageServlet extends HttpServlet {
     String replacement = "<figure><img src=\"$3\" /> <figcaption>$2</figcaption></figure>";
     String text = message.getText();
     text = text.replaceAll(regex, replacement);
+    // makes text bold
+    text = text.replace("[b]", "<strong>").replace("[/b]", "</strong>");
+    // makes text italic
+    text = text.replace("[i]", "<i>").replace("[/i]", "</i>");
+    // underlines text
+    text = text.replace("[u]", "<ins>").replace("[/u]", "</ins>");
+    // creates a strikethrough on text
+    text = text.replace("[s]", "<del>").replace("[/s]", "</del>");
     message.setText(text);
   }
 
@@ -86,6 +110,9 @@ public class MessageServlet extends HttpServlet {
     List<Message> messages = datastore.getMessagesByRecipient(user);
 
     for (Message m : messages) {
+      m.setText(messageTransformer.transformText(m.getText()));
+
+      // TODO: Remove this when prepareMessageForDisplay is deleted.
       prepareMessageForDisplay(m);
     }
     Gson gson = new Gson();
@@ -105,7 +132,7 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
+    String text = request.getParameter("text");
     String recipient = request.getParameter("recipient");
 
     Message message = new Message(user, text, recipient);

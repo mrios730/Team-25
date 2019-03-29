@@ -49,7 +49,7 @@ public class Message {
   }
 
   public String getImageUrl() {
-    return imageURL;
+    return imageUrl;
   }
 
   public String getUser() {

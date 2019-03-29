@@ -40,7 +40,10 @@ function showMessageFormIfLoggedIn() {
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
           document.getElementById('about-me-form').classList.remove('hidden');
+          const messageForm = document.getElementById('message-form');
           fetchImageUploadUrlAndShowForm();
+          messageForm.classList.remove('hidden');
+          document.getElementById('recipient-input').value = parameterUsername;
         }
       });
 }
@@ -113,8 +116,6 @@ function fetchImageUploadUrlAndShowForm() {
     .then((imageUploadUrl) => {
       const messageForm = document.getElementById('message-form');
       messageForm.action = imageUploadUrl;
-      messageForm.classList.remove('hidden');
-      document.getElementById('recipientInput').value = parameterUsername;
     });
 }
 
@@ -124,4 +125,5 @@ function buildUI() {
   showMessageFormIfLoggedIn();
   fetchMessages();
   fetchAboutMe();
+  ClassicEditor.create( document.getElementById('message-input') );
 }
