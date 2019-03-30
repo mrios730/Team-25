@@ -20,6 +20,16 @@ body {
   background-color: #4b81b7;
 }
 
+.center {
+  text-align: center;
+}
+
+/*Adds background color to navigation bar*/
+.message-header {
+  border-bottom: thin solid black;
+  background-color: #d7d7e2;
+}
+
 /* Remove bullet points from navigation bar. */
 nav ul {
   list-style-type: none;
@@ -37,13 +47,4 @@ nav li {
 /*Color for text*/
 .text {
   color: #E9E9E9;
-}
-
-.center {
-  text-align: center;
-}
-
-.message-header {
-  border-bottom: thin solid black;
-  background-color: #d7d7e2;
 }
