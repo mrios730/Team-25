@@ -16,7 +16,8 @@
 
 /* Prevent the page from becoming too wide. */
 body {
-  max-width: 600px;
+  /*max-width: 800px#222930;*/
+  background-color: #4b81b7;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -29,4 +30,13 @@ nav ul {
 nav li {
   display: inline-block;
   margin-right: 10px
+}
+
+/*Color for text*/
+.text {
+  color: #E9E9E9;
+}
+
+.center {
+  text-align: center;
 }
