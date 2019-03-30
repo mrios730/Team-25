@@ -41,6 +41,7 @@ function showMessageFormIfLoggedIn() {
         if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
           document.getElementById('about-me-form').classList.remove('hidden');
           const messageForm = document.getElementById('message-form');
+          fetchImageUploadUrlAndShowForm();
           messageForm.classList.remove('hidden');
           document.getElementById('recipient-input').value = parameterUsername;
         }
@@ -105,6 +106,17 @@ function buildMessageDiv(message) {
   messageDiv.appendChild(bodyDiv);
 
   return messageDiv;
+}
+
+function fetchImageUploadUrlAndShowForm() {
+  fetch('/image-upload-url')
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const messageForm = document.getElementById('message-form');
+      messageForm.action = imageUploadUrl;
+    });
 }
 
 /** Fetches data and populates the UI of the page. */
