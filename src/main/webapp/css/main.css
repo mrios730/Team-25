@@ -24,12 +24,14 @@ body {
 nav ul {
   list-style-type: none;
   padding-left: 0;
+  /*color: #d7d7e2;*/
 }
 
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
+  /*background-color: #d7d7e2;*/
 }
 
 /*Color for text*/
@@ -39,4 +41,9 @@ nav li {
 
 .center {
   text-align: center;
+}
+
+.message-header {
+  border-bottom: thin solid black;
+  background-color: #d7d7e2;
 }
