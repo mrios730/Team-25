@@ -175,4 +175,29 @@ public class Datastore {
     markerEntity.setProperty("content", marker.getContent());
     datastore.put(markerEntity);
   }
+
+  /**Retrieve all events created by users */
+  public List<Event> getAllEvents() {
+    List<Event> events = new ArrayList<>();
+    Query query = new Query("Event");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        String eventName = (String) entity.getProperty("eventName");
+        String description = (String) entity.getProperty("description");
+        String organizerName = (String) entity.getProperty("OrganizerNames");
+        String date = (String) entity.getProperty("eventDate");
+        String time = (String) entity.getProperty("eventDate");
+        String location = (String) entity.getProperty("eventDate");
+        Event event = new Event(eventName, description, organizerName, date, time, location);
+        events.add(event);
+      } catch (Exception e) {
+        System.err.println("Error retrieving event");
+        System.err.println(entity.toString());
+        e.printStackTrace();
+      }
+    }
+    return events;
+  }
 }
