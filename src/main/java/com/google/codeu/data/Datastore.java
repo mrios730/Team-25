@@ -176,7 +176,7 @@ public class Datastore {
     datastore.put(markerEntity);
   }
 
-  /**Retrieve all events created by users */
+  /** Retrieve all events created by users */
   public List<Event> getAllEvents() {
     List<Event> events = new ArrayList<>();
     Query query = new Query("Event");
