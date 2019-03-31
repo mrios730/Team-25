@@ -16,7 +16,17 @@
 
 /* Prevent the page from becoming too wide. */
 body {
-  max-width: 600px;
+  background-color: #8bb6f9;
+}
+
+.center {
+  text-align: center;
+}
+
+/*Adds background color to navigation bar*/
+.message-header {
+  background-color: #d7d7e2;
+  border-bottom: thin solid black;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -28,5 +38,10 @@ nav ul {
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
+}
+
+/*Color for text*/
+.text {
+  color: #E9E9E9;
 }
