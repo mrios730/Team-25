@@ -18,16 +18,16 @@ package com.google.codeu.servlets;
 
 import java.io.IOException;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 import com.google.codeu.data.Event;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -59,15 +59,14 @@ public class EventFormServlet extends HttpServlet {
     response.getOutputStream().println();*/
   }
 
-  /** Stores a new {@link Event}. */
+  /* Stores a new {@link Event}.*/
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-      UserService userService = UserServiceFactory.getUserService();
-      if (!userService.isUserLoggedIn()) {
-        response.sendRedirect("/index.html");
-        return;
+    UserService userService = UserServiceFactory.getUserService();
+    if (!userService.isUserLoggedIn()) {
+      response.sendRedirect("/index.html");
+      return;
       }
 
       String eventName = request.getParameter("eventName");
@@ -78,7 +77,7 @@ public class EventFormServlet extends HttpServlet {
       String location = request.getParameter("location");
 
       Event event = new Event(eventName, description, organizerNames,eventDate,eventTime,location);
-      datastore.storeEvent(event);
+      /*datastore.storeEvent(event);*/
     }
 
 }
