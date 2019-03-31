@@ -42,6 +42,16 @@ public class Message {
     this.text = text;
     this.timestamp = timestamp;
     this.recipient = recipient;
+    this.imageUrl = null;
+  }
+
+  public Message(UUID id, String user, String text, long timestamp, String recipient, String imageUrl) {
+    this.id = id;
+    this.user = user;
+    this.text = text;
+    this.timestamp = timestamp;
+    this.recipient = recipient;
+    this.imageUrl = imageUrl;
   }
 
   public UUID getId() {
