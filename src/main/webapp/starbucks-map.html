@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>Starbucks</title>
+  <link rel="stylesheet" href="/css/main.css">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnvi8htmNmKQkmIMqiCu1KGgT3ikR6uO4"></script>
-  <script>  
+  <script>
     function createStarbucksMap(){
       fetch('/starbucks-map').then(function(response) {
         return response.json();
@@ -23,7 +24,7 @@
       const marker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map: map,
-      }); 
+      });
       //Will store the store number for each starbucks
       var infoWindow = new google.maps.InfoWindow({
         content: storeNumber

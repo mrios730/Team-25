@@ -16,8 +16,7 @@
 
 /* Prevent the page from becoming too wide. */
 body {
-  /*max-width: 800px#222930;*/
-  background-color: #4b81b7;
+  background-color: #8bb6f9;
 }
 
 .center {
@@ -26,22 +25,20 @@ body {
 
 /*Adds background color to navigation bar*/
 .message-header {
-  border-bottom: thin solid black;
   background-color: #d7d7e2;
+  border-bottom: thin solid black;
 }
 
 /* Remove bullet points from navigation bar. */
 nav ul {
   list-style-type: none;
   padding-left: 0;
-  /*color: #d7d7e2;*/
 }
 
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
   margin-right: 10px;
-  /*background-color: #d7d7e2;*/
 }
 
 /*Color for text*/
