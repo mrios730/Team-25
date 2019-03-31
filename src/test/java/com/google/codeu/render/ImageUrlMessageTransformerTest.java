@@ -21,7 +21,7 @@ public class ImageUrlMessageTransformerTest {
   @Test
   public void testTransformText() {
     runTransformTextTest("This is the Google logo http://www.google.com/images/logo.png!",
-      "This is the Google logo <figure><img src=\"http://www.google.com/images/logo.png\" /> <figcaption></figcaption></figure>!");
+        "This is the Google logo <figure><img src=\"http://www.google.com/images/logo.png\" /> <figcaption></figcaption></figure>!");
     runTransformTextTest("[This is the Google logo] http://www.google.com/images/logo.png!",
         "<figure><img src=\"http://www.google.com/images/logo.png\" /> <figcaption>This is the Google logo</figcaption></figure>!");
     runTransformTextTest("", "");
