@@ -45,6 +45,7 @@ public class Message {
     this.imageUrl = null;
   }
 
+  /** Constructs a new Message written by the user, if they uploaded an image. */
   public Message(UUID id, String user, String text, long timestamp, String recipient,
       String imageUrl) {
     this.id = id;
