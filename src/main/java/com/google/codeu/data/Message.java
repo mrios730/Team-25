@@ -37,12 +37,7 @@ public class Message {
   }
 
   public Message(UUID id, String user, String text, long timestamp, String recipient) {
-    this.id = id;
-    this.user = user;
-    this.text = text;
-    this.timestamp = timestamp;
-    this.recipient = recipient;
-    this.imageUrl = null;
+    this(id, user, text, timestamp, recipient, null);
   }
 
   /** Constructs a new Message written by the user, if they uploaded an image. */
