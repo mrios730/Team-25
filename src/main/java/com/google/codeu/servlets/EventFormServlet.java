@@ -16,19 +16,16 @@
 
 package com.google.codeu.servlets;
 
-import java.io.IOException;
-
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 import com.google.codeu.data.Event;
-
+import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
 
 /** Handles fetching and saving event data. */
@@ -42,42 +39,24 @@ public class EventFormServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  /*Responds with details of a specific event.*/
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    response.setContentType("text/html");
-
-    String eventName = request.getParameter("eventName");
-
-    if (StringUtils.isEmpty(eventName)) {
-      // Request is invalid, return empty response
-      return;
-    }
-
-    /*Event eventData = datastore.getEvent(eventName);
-    response.getOutputStream().println();*/
-  }
-
   /* Stores a new {@link Event}.*/
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/index.html");
       return;
-      }
-
-      String eventName = request.getParameter("eventName");
-      String description = request.getParameter("description");
-      String organizerNames = request.getParameter("organizerNames");
-      String eventDate = request.getParameter("eventDate");
-      String eventTime = request.getParameter("eventTime");
-      String location = request.getParameter("location");
-
-      Event event = new Event(eventName, description, organizerNames,eventDate,eventTime,location);
-      /*datastore.storeEvent(event);*/
     }
+
+    String eventName = request.getParameter("eventName");
+    String description = request.getParameter("description");
+    String organizerNames = request.getParameter("organizerNames");
+    String eventDate = request.getParameter("eventDate");
+    String eventTime = request.getParameter("eventTime");
+    String location = request.getParameter("location");
+
+    Event event = new Event(eventName, description, organizerNames,eventDate,eventTime,location);
+      /*datastore.storeEvent(event);*/
+  }
 
 }
