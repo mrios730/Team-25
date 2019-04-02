@@ -19,8 +19,8 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
-import com.google.codeu.data.User;
 import com.google.codeu.data.Event;
+import com.google.codeu.data.User;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +56,7 @@ public class EventFormServlet extends HttpServlet {
     String location = request.getParameter("location");
 
     Event event = new Event(eventName, description, organizerNames,eventDate,eventTime,location);
-      /*datastore.storeEvent(event);*/
+    /*datastore.storeEvent(event);*/
   }
 
 }
