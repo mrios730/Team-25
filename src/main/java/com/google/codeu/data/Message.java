@@ -46,7 +46,7 @@ public class Message {
     this.id = id;
     this.user = user;
     this.text = text;
-    this.timestamp = timestamp; 
+    this.timestamp = timestamp;
     this.recipient = recipient;
     this.imageUrl = imageUrl;
   }
