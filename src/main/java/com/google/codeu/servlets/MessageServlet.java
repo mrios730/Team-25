@@ -19,7 +19,6 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
@@ -41,8 +40,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -68,9 +65,8 @@ public class MessageServlet extends HttpServlet {
   }
 
   /**
-   * Replaces messages with image links in order to display images
-   * properly.
-   * TODO: Migrate the code here to MessageTransformer implementations and delete this method.
+   * Replaces messages with image links in order to display images properly. TODO: Migrate the code
+   * here to MessageTransformer implementations and delete this method.
    */
   public void prepareMessageForDisplay(Message message) {
     // makes text bold
