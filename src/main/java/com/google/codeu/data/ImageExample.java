@@ -17,7 +17,7 @@ import java.util.List;
 public class ImageExample {
 
   public static void main(String[] args) throws IOException {
-    String filePath = "C:\Users\litop\Desktop\47575492_10211475938168631_1870509668166533120_n.jpg";
+    String filePath = "C:\\Users\\litop\\Desktop\\47575492_10211475938168631_1870509668166533120_n.jpg";
     ByteString imageBytes = ByteString.readFrom(new FileInputStream(filePath));
     Image image = Image.newBuilder().setContent(imageBytes).build();
 
