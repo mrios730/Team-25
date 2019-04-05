@@ -110,6 +110,12 @@ function buildMessageDiv(message) {
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
 
+  if(message.imageLabels){
+    bodyDiv.innerHTML += '<br/>';
+    bodyDiv.innerHTML += message.imageLabels;
+  }
+
+
   return messageDiv;
 }
 

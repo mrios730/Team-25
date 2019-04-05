@@ -35,11 +35,11 @@ public class Message {
    * time.
    */
   public Message(String user, String text, String recipient) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, null);
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, null, null);
   }
 
   public Message(UUID id, String user, String text, long timestamp, String recipient) {
-    this(id, user, text, timestamp, recipient, null);
+    this(id, user, text, timestamp, recipient, null, null);
   }
 
   /** Constructs a new Message written by the user, if they uploaded an image. */
