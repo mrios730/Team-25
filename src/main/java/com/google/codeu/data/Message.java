@@ -30,20 +30,16 @@ public class Message {
   private String imageLabels;
 
   /**
-   * Constructs a new {@link Message} posted by {@code user} with {@code text} content and received by {@code recipient}.
-   * Generates a random ID and uses the current system time for the creation time.
+   * Constructs a new {@link Message} posted by {@code user} with {@code text} content and received
+   * by {@code recipient}. Generates a random ID and uses the current system time for the creation
+   * time.
    */
   public Message(String user, String text, String recipient) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient);
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, null);
   }
 
   public Message(UUID id, String user, String text, long timestamp, String recipient) {
-    this.id = id;
-    this.user = user;
-    this.text = text;
-    this.timestamp = timestamp;
-    this.recipient = recipient;
-    this.imageUrl = null;
+    this(id, user, text, timestamp, recipient, null);
   }
 
   /** Constructs a new Message written by the user, if they uploaded an image. */
@@ -52,7 +48,7 @@ public class Message {
     this.id = id;
     this.user = user;
     this.text = text;
-    this.timestamp = timestamp; 
+    this.timestamp = timestamp;
     this.recipient = recipient;
     this.imageUrl = imageUrl;
     this.imageLabels = imageLabels;
@@ -82,7 +78,7 @@ public class Message {
     return timestamp;
   }
 
-  public String getRecipient(){
+  public String getRecipient() {
     return recipient;
   }
 

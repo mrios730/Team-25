@@ -19,7 +19,6 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
@@ -28,6 +27,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.codeu.render.EmojiMessageTransformer;
+import com.google.codeu.render.ImageUrlMessageTransformer;
 import com.google.codeu.render.MessageTransformer;
 import com.google.codeu.render.SequentialMessageTransformer;
 import com.google.gson.Gson;
@@ -40,8 +40,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -54,7 +52,8 @@ public class MessageServlet extends HttpServlet {
   public void init() {
     datastore = new Datastore();
     messageTransformer =
-        new SequentialMessageTransformer(Arrays.asList(new EmojiMessageTransformer()));
+        new SequentialMessageTransformer(Arrays.asList(new EmojiMessageTransformer(),
+                                                       new ImageUrlMessageTransformer()));
   }
 
   public void setDatastore(Datastore datastore) {
@@ -66,20 +65,12 @@ public class MessageServlet extends HttpServlet {
   }
 
   /**
-   * Replaces messages with image links in order to display images
-   * properly.
-   * TODO: Migrate the code here to MessageTransformer implementations and delete this method.
+   * Replaces messages with image links in order to display images properly. TODO: Migrate the code
+   * here to MessageTransformer implementations and delete this method.
    */
   public void prepareMessageForDisplay(Message message) {
-    // Matches URL of an image file, with an optional caption. For example:
-    //     [the google logo] http://www.google.com/images/logo.png
-    // Matched URLs must end with one of: .png, .jpg, .gif
-    String regex = "(\\[([^\\]]+)\\]\\s?)?(https?://(\\S+\\.\\S+)+/(\\S+\\.?)+\\.(png|jpe?g|gif))";
-    // Replaces the URL with the actual image. If a caption is given, it is printed below the image.
-    String replacement = "<figure><img src=\"$3\" /> <figcaption>$2</figcaption></figure>";
-    String text = message.getText();
-    text = text.replaceAll(regex, replacement);
     // makes text bold
+    String text = message.getText();
     text = text.replace("[b]", "<strong>").replace("[/b]", "</strong>");
     // makes text italic
     text = text.replace("[i]", "<i>").replace("[/i]", "</i>");
