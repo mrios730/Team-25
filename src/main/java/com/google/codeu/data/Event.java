@@ -13,7 +13,7 @@ public class Event {
   private String eventTime;
   private String location;
 
-  Event(String eventName, String description, String organizerNames, 
+  public Event(String eventName, String description, String organizerNames, 
       String eventDate, String eventTime, String location) {
     this.eventName = eventName;
     this.description = description;
