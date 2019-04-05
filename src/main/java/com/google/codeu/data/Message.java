@@ -27,6 +27,7 @@ public class Message {
   private long timestamp;
   private String recipient;
   private String imageUrl;
+  private String imageLabels;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content and received by {@code recipient}.
@@ -47,17 +48,22 @@ public class Message {
 
   /** Constructs a new Message written by the user, if they uploaded an image. */
   public Message(UUID id, String user, String text, long timestamp, String recipient,
-      String imageUrl) {
+      String imageUrl, String imageLabels) {
     this.id = id;
     this.user = user;
     this.text = text;
     this.timestamp = timestamp; 
     this.recipient = recipient;
     this.imageUrl = imageUrl;
+    this.imageLabels = imageLabels;
   }
 
   public UUID getId() {
     return id;
+  }
+
+  public String getImageLabels() {
+    return imageLabels;
   }
 
   public String getImageUrl() {
@@ -86,5 +92,9 @@ public class Message {
 
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+
+  public void setImageLabels(String imageLabels) {
+    this.imageLabels = imageLabels;
   }
 }

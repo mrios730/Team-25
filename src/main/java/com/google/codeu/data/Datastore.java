@@ -49,6 +49,7 @@ public class Datastore {
     if (message.getImageUrl() != null) {
       messageEntity.setProperty("imageUrl", message.getImageUrl());
     }
+    messageEntity.setProperty("imageLabels", message.getImageLabels());
 
     datastore.put(messageEntity);
   }
@@ -87,7 +88,8 @@ public class Datastore {
         long timestamp = (long) entity.getProperty("timestamp");
         String recipient = (String) entity.getProperty("recipient");
         String imageUrl = (String) entity.getProperty("imageUrl");
-        Message message = new Message(id, user, text, timestamp, recipient, imageUrl);
+        String imageLabels = (String) entity.getProperty("imageLabels");
+        Message message = new Message(id, user, text, timestamp, recipient, imageUrl, imageLabels);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
