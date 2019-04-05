@@ -56,7 +56,7 @@ public class EventFormServlet extends HttpServlet {
     String location = request.getParameter("location");
 
     Event event = new Event(eventName, description, organizerNames,eventDate,eventTime,location);
-    /*datastore.storeEvent(event);*/
+    datastore.storeEvent(event);
   }
 
 }

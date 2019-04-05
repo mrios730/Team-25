@@ -26,25 +26,38 @@ public class Message {
   private String text;
   private long timestamp;
   private String recipient;
+  private String imageUrl;
 
   /**
-   * Constructs a new {@link Message} posted by {@code user} with {@code text} content and received by {@code recipient}.
-   * Generates a random ID and uses the current system time for the creation time.
+   * Constructs a new {@link Message} posted by {@code user} with {@code text} content and received
+   * by {@code recipient}. Generates a random ID and uses the current system time for the creation
+   * time.
    */
   public Message(String user, String text, String recipient) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient);
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, null);
   }
 
   public Message(UUID id, String user, String text, long timestamp, String recipient) {
+    this(id, user, text, timestamp, recipient, null);
+  }
+
+  /** Constructs a new Message written by the user, if they uploaded an image. */
+  public Message(UUID id, String user, String text, long timestamp, String recipient,
+      String imageUrl) {
     this.id = id;
     this.user = user;
     this.text = text;
     this.timestamp = timestamp;
     this.recipient = recipient;
+    this.imageUrl = imageUrl;
   }
 
   public UUID getId() {
     return id;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
   }
 
   public String getUser() {
@@ -59,11 +72,15 @@ public class Message {
     return timestamp;
   }
 
-  public String getRecipient(){
+  public String getRecipient() {
     return recipient;
   }
 
   public void setText(String text) {
     this.text = text;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }

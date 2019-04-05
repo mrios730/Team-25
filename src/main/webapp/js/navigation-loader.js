@@ -20,6 +20,7 @@
  */
 function addLoginOrLogoutLinkToNavigation() {
   const navigationElement = document.getElementById('navigation');
+  navigationElement.classList.add('message-header');
   if (!navigationElement) {
     console.warn('Navigation element not found!');
     return;

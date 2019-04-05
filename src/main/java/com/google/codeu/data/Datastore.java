@@ -46,6 +46,9 @@ public class Datastore {
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
     messageEntity.setProperty("recipient", message.getRecipient());
+    if (message.getImageUrl() != null) {
+      messageEntity.setProperty("imageUrl", message.getImageUrl());
+    }
 
     datastore.put(messageEntity);
   }
@@ -83,7 +86,8 @@ public class Datastore {
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
         String recipient = (String) entity.getProperty("recipient");
-        Message message = new Message(id, user, text, timestamp, recipient);
+        String imageUrl = (String) entity.getProperty("imageUrl");
+        Message message = new Message(id, user, text, timestamp, recipient, imageUrl);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
@@ -174,5 +178,43 @@ public class Datastore {
     markerEntity.setProperty("lng", marker.getLng());
     markerEntity.setProperty("content", marker.getContent());
     datastore.put(markerEntity);
+  }
+
+  /** Retrieve all events created by users. */
+  public List<Event> getAllEvents() {
+    List<Event> events = new ArrayList<>();
+    Query query = new Query("Event");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        String eventName = (String) entity.getProperty("eventName");
+        String description = (String) entity.getProperty("description");
+        String organizerName = (String) entity.getProperty("OrganizerNames");
+        String date = (String) entity.getProperty("eventDate");
+        String time = (String) entity.getProperty("eventDate");
+        String location = (String) entity.getProperty("eventDate");
+        Event event = new Event(eventName, description, organizerName, date, time, location);
+        events.add(event);
+      } catch (Exception e) {
+        System.err.println("Error retrieving event");
+        System.err.println(entity.toString());
+        e.printStackTrace();
+      }
+    }
+    return events;
+  }
+
+  /** Stores Event in Datastore. */
+  public void storeEvent(Event event) {
+    Entity eventEntity = new Entity("Event", event.getId().toString());
+    eventEntity.setProperty("eventName", event.getEventName());
+    eventEntity.setProperty("organizerNames", event.getOrganizerNames());
+    eventEntity.setProperty("eventDate", event.getEventDate());
+    eventEntity.setProperty("eventTime", event.getEventTime());
+    eventEntity.setProperty("location", event.getLocation());
+    eventEntity.setProperty("description", event.getDescription());
+
+    datastore.put(eventEntity);
   }
 }

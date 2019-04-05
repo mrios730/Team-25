@@ -41,6 +41,7 @@ function showMessageFormIfLoggedIn() {
         if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
           document.getElementById('about-me-form').classList.remove('hidden');
           const messageForm = document.getElementById('message-form');
+          fetchImageUploadUrlAndShowForm();
           messageForm.classList.remove('hidden');
           document.getElementById('recipient-input').value = parameterUsername;
         }
@@ -99,12 +100,28 @@ function buildMessageDiv(message) {
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
 
+  if (message.imageUrl) {
+    bodyDiv.innerHTML += '<br/>';
+    bodyDiv.innerHTML += '<img src="' + message.imageUrl + '" />';
+  }
+
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
 
   return messageDiv;
+}
+
+function fetchImageUploadUrlAndShowForm() {
+  fetch('/image-upload-url')
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const messageForm = document.getElementById('message-form');
+      messageForm.action = imageUploadUrl;
+    });
 }
 
 /** Fetches data and populates the UI of the page. */
