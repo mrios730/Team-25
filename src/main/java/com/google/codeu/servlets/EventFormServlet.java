@@ -57,6 +57,7 @@ public class EventFormServlet extends HttpServlet {
 
     Event event = new Event(eventName, description, organizerNames,eventDate,eventTime,location);
     datastore.storeEvent(event);
+    response.sendRedirect("/event-list.html");
   }
 
 }
