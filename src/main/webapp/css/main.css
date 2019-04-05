@@ -45,3 +45,13 @@ nav li {
 .text {
   color: #E9E9E9;
 }
+
+.mdl-layout__tab {
+  text-transform: none !important
+}
+
+div.body-card {
+  width: 700px;
+  margin: 20px auto 15px;  /* Space around the card: top, sides, bottom. */
+  padding: 16px;  /* Space around the content inside the card. */
+}

@@ -3,10 +3,17 @@
 <head>
   <title>Stats</title>
   <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/nav-bar-loader.js"></script>
+  
+  <!-- Link in the Material Design Lite libraries. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-light_blue.min.css" />
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <script>
     // Fetch stats and display them in the page.
-    function fetchStats(){
+    function fetchStats() {
       const url = '/stats';
       fetch(url).then((response) => {
         return response.json();
@@ -21,28 +28,39 @@
       });
     }
 
-    function buildStatElement(statString){
+    function buildStatElement(statString) {
      const statElement = document.createElement('p');
      statElement.appendChild(document.createTextNode(statString));
      return statElement;
     }
 
     // Fetch data and populate the UI of the page.
-    function buildUI(){
+    function buildUI() {
      fetchStats();
     }
   </script>
 </head>
-<body onload="buildUI()">
-  <nav>
-    <ul id="navigation">
-      <li><a href="/">Home</a></li>
-    </ul>
-  </nav>
-  <div id="content">
-    <h1>Site Statistics</h1>
-    <hr/>
-    <div id="stats-container">Loading...</div>
+<body onload="addLoginOrLogoutLinkToNavigation('Site Stats'); buildUI();">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <!-- Header. -->
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title. -->
+        <span class="mdl-layout-title">Site Statistics</span>
+      </div>
+      <!-- Tabs. Populated by addLoginOrLogoutLinkToNavigation. -->
+      <div id="navigation" class="mdl-layout__tab-bar mdl-js-ripple-effect"></div>
+    </header>
+
+    <main class="mdl-layout__content">
+      <div class="page-content">
+
+        <div class="body-card mdl-card mdl-shadow--2dp">
+          <div id="stats-container">Loading...</div>
+        </div>
+
+      </div>
+    </main>
   </div>
 </body>
 </html>
