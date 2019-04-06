@@ -159,6 +159,8 @@ public class MessageServlet extends HttpServlet {
       try {
         byte[] blobBytes = getBlobBytes(blobstoreService, blobKey);
         String imageLabels = getImageLabels(blobBytes);
+                System.out.println("Error 2.");
+
         message.setImageLabels(imageLabels);
       }
       catch (IOException e) {
@@ -193,6 +195,7 @@ public class MessageServlet extends HttpServlet {
     return outputBytes.toByteArray();
   }
 
+  // TODO: Something's up with this function
   private String getImageLabels(byte[] imgBytes) throws IOException {
     ByteString byteString = ByteString.copyFrom(imgBytes);
     Image image = Image.newBuilder().setContent(byteString).build();
