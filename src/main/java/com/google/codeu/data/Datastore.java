@@ -190,10 +190,10 @@ public class Datastore {
       try {
         String eventName = (String) entity.getProperty("eventName");
         String description = (String) entity.getProperty("description");
-        String organizerName = (String) entity.getProperty("OrganizerNames");
+        String organizerName = (String) entity.getProperty("organizerNames");
         String date = (String) entity.getProperty("eventDate");
-        String time = (String) entity.getProperty("eventDate");
-        String location = (String) entity.getProperty("eventDate");
+        String time = (String) entity.getProperty("eventTime");
+        String location = (String) entity.getProperty("location");
         Event event = new Event(eventName, description, organizerName, date, time, location);
         events.add(event);
       } catch (Exception e) {
