@@ -22,40 +22,89 @@ limitations under the License.
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
     <script src="/js/user-page-loader.js"></script>
-    <script src="/js/navigation-loader.js"></script>
+    <script src="/js/nav-bar-loader.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+
+    <!-- Link in the Material Design Lite libraries. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-orange.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-  <body onload="buildUI();">
-    <nav>
-      <ul id="navigation" class="message-header">
-        <li><a href="/">Home</a></li>
-      </ul>
-    </nav>
-    <h1 id="page-title">User Page</h1>
-    <div id="about-me-container">Loading...</div>
-    <div id="about-me-form" class="hidden">
-      <form action="/about" method="POST">
-        <textarea name="about-me" placeholder="about me" rows=4 required></textarea>
-        <br/>
-        <input type="submit" value="Submit">
-      </form>
+
+  <body onload="addLoginOrLogoutLinkToNavigation('Your Page'); buildUI();">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <!-- Header. -->
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title. -->
+          <span id="page-title" class="mdl-layout-title">User Page</span>
+        </div>
+        <!-- Tabs. Populated by addLoginOrLogoutLinkToNavigation. -->
+        <div id="navigation" class="mdl-layout__tab-bar mdl-js-ripple-effect"></div>
+      </header>
+
+      <main class="mdl-layout__content">
+        <div class="page-content">
+
+          <!-- About me. -->
+          <div id="about-me-card" class="body-card mdl-card mdl-shadow--2dp">
+            <div id="about-me-form" class="hidden">
+              <form action="/about" method="POST">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                     style="width: 100%">
+                  <textarea name="about-me" rows= "4" id="about-me"
+                            class="mdl-textfield__input" type="text"></textarea>
+                  <label class="mdl-textfield__label" for="about-me">About Me</label>
+                </div>
+                <div id="about-me-update-button-div">
+                  <input type="submit" value="Update"
+                         style="float: right;"
+                         class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"/>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Message compose. -->
+          <div id="message-compose-card" class="body-card mdl-card mdl-shadow--2dp">
+            <form id="message-form" class="hidden" method="POST" enctype="multipart/form-data">
+              <div>
+                <div>
+                  <label for="message-input">Enter a new message:</label>
+                </div>
+                <div style="margin-top: 10px;">
+                  <textarea name="text" id="message-input"></textarea>
+                </div>
+              </div>
+              
+              <div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                     style="display: inline-block; margin: 10px auto;">
+                  <input class="mdl-textfield__input" type="text" name="recipient" id="recipient-input">
+                  <label class="mdl-textfield__label" for="recipient-input">Recipient</label>
+                </div>
+
+                <div style="display: inline-block; float: right; margin-top: 15px;">
+                  <input type="submit" value="Send"
+                         class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"/>
+                </div>
+              </div>
+
+              <div>
+                <label for="image">Add an image to your message:</label>
+                <input type="file" id="image" name="image">
+              </div>
+            </form>
+          </div>
+
+          <!-- Message list. -->
+          <div id="message-list-card" class="body-card mdl-card mdl-shadow--2dp">
+            <div id="message-container">Loading...</div>
+          </div>
+    
+        </div>
+      </main>
     </div>
-    <form id="message-form" class="hidden" method="POST" enctype="multipart/form-data">
-      Enter a new message:
-      <br/>
-      <textarea name="text" id="message-input"></textarea>
-      <br/>
-      Add an image to your message:
-      <input type="file" name="image">
-      <br/>
-      <label for="recipient-input">To:</label>
-      <input value="" name="recipient" id="recipient-input">
-      <input type="submit" value="Submit">
-    </form>
-
-    <hr/>
-
-    <div id="message-container">Loading...</div>
-
   </body>
 </html>

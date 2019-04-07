@@ -25,7 +25,7 @@ if (!parameterUsername) {
 
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
+  document.getElementById('page-title').innerText = 'User Page: ' + parameterUsername;
   document.title = parameterUsername + ' - User Page';
 }
 
@@ -38,12 +38,23 @@ function showMessageFormIfLoggedIn() {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+        if (loginStatus.isLoggedIn) {
           document.getElementById('about-me-form').classList.remove('hidden');
-          const messageForm = document.getElementById('message-form');
-          fetchImageUploadUrlAndShowForm();
-          messageForm.classList.remove('hidden');
-          document.getElementById('recipient-input').value = parameterUsername;
+          if (loginStatus.username == parameterUsername) {
+            const messageForm = document.getElementById('message-form');
+            fetchImageUploadUrlAndShowForm();
+            messageForm.classList.remove('hidden');
+            const recipientInput = document.getElementById('recipient-input');
+            recipientInput.value = parameterUsername;
+            if (parameterUsername !== '')
+              recipientInput.parentElement.classList.add('is-dirty');
+            componentHandler.upgradeElement(recipientInput);
+          } else {
+            // Looking at another user's page. Hide the 'Update' button and lock the about me form.
+            document.getElementById('about-me-update-button-div').style.display = 'none';
+            document.getElementById('about-me').disabled = true;
+            document.getElementById('message-compose-card').style.display = 'none';
+          }
         }
       });
 }
@@ -77,11 +88,16 @@ function fetchAboutMe() {
         return response.text();
       })
       .then((aboutMe) => {
-        const aboutMeContainer = document.getElementById('about-me-container');
-        if (aboutMe == ''){
-          aboutMe = 'This user has not entered any information yet.';
+        aboutMe = aboutMe.trim();
+        const aboutMeContainer = document.getElementById('about-me');
+        if (aboutMe !== '') {
+          aboutMeContainer.value = aboutMe;
+          aboutMeContainer.parentElement.classList.add('is-dirty');
+        } else if (document.getElementById('about-me').disabled) {
+          // No "about me" to display, and the form is disabled, so don't show the card at all.
+          document.getElementById('about-me-card').style.display = 'none';
         }
-        aboutMeContainer.innerHTML = aboutMe;
+        componentHandler.upgradeElement(aboutMeContainer);
       });
 }
 
