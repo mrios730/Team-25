@@ -4,6 +4,7 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Event;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +26,19 @@ public class EventListServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
+    String tag = request.getParameter("tags");
 
     List<Event> events = datastore.getAllEvents();
+    if (tag != null) { 
+      Iterator it = events.iterator();
+      while (it.hasNext()) {
+        Event e = (Event) it.next();
+        if (!e.getDescription().contains(tag))
+          it.remove();
+      }
+    }
     Gson gson = new Gson();
     String json = gson.toJson(events);
-    response.getOutputStream().println(json);
+    response.getWriter().println(json);
   }
 }
