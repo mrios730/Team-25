@@ -33,8 +33,9 @@ public class EventListServlet extends HttpServlet {
       Iterator it = events.iterator();
       while (it.hasNext()) {
         Event e = (Event) it.next();
-        if (!e.getDescription().contains(tag))
+        if (!e.getDescription().contains(tag)){
           it.remove();
+        }
       }
     }
     Gson gson = new Gson();
