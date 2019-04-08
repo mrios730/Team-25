@@ -4,9 +4,7 @@
 <title>Event List</title>
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/user-page.css">
-
-<script>
-    
+<script src="/js/navigation-loader.js">
   // Fetch messages and add them to the page.
   function fetchEvents(){
     const url = "/event-list";
@@ -77,11 +75,16 @@
   
   // Fetch data and populate the UI of the page.
   function buildUI(){
-   fetchEvents();
+    fetchEvents();
   }
 </script>
 </head>
-<body onload="buildUI()">
+<body onload="addLoginOrLogoutLinkToNavigation(); buildUI();">
+  <nav>
+    <ul id="navigation">
+      <li><a href="/event-list.html">Event List</a></li>
+    </ul>
+  </nav>
  <div id="content">
   <h1>Event List</h1>
   <hr/>

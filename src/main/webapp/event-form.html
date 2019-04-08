@@ -3,8 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/navigation-loader.js"></script>
   </head>
-  <body>
+  <body onload="addLoginOrLogoutLinkToNavigation();">
+    <nav>
+      <ul id="navigation">
+        <li><a href="/event-form.html">Event Form</a></li>
+      </ul>
+    </nav>
     <h2>Create your event!</h2>
     <form action="/event-form" method="POST">
       Name:<br>
