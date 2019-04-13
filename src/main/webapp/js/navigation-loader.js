@@ -39,10 +39,16 @@ function addLoginOrLogoutLinkToNavigation() {
               createListItem(createLink('/stats.html', 'Site Stats')));
 
           navigationElement.appendChild(
-              createListItem(createLink('/logout', 'Logout')));
+              createListItem(createLink('/event-form.html', 'Event Form')));
+
+          navigationElement.appendChild(
+              createListItem(createLink('/event-list.html', 'Event List')));
+
+          navigationElement.appendChild(
+              createListItem(createLink('/logout', 'Log Out')));
         } else {
           navigationElement.appendChild(
-              createListItem(createLink('/login', 'Login')));
+              createListItem(createLink('/login', 'Log In')));
         }
       });
 }
