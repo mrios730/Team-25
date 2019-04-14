@@ -16,6 +16,8 @@
 
 package com.google.codeu.servlets;
 
+import java.io.FileInputStream;
+
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -156,17 +158,53 @@ public class MessageServlet extends HttpServlet {
       ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
       String imageUrl = imagesService.getServingUrl(options);
       message.setImageUrl(imageUrl);
-      try {
-        byte[] blobBytes = getBlobBytes(blobstoreService, blobKey);
-        String imageLabels = getImageLabels(blobBytes);
-                System.out.println("Error 2.");
+      // try {
+      //   byte[] blobBytes = getBlobBytes(blobstoreService, blobKey);
+      //   String imageLabels = getImageLabels(blobBytes);
+      //           System.out.println("Error 2.");
 
-        message.setImageLabels(imageLabels);
-      }
-      catch (IOException e) {
-        System.out.println("Error in getting blobBytes.");
-      }
+      //   message.setImageLabels(imageLabels);
+      // }
+      // catch (IOException e) {
+      //   System.out.println("Error in getting blobBytes.");
+      // }
     }
+    try {
+      imageAnalysis();
+    }
+    catch (IOException e) {
+      System.out.println("error in analyzing image.");
+    }
+    
+  }
+
+  private void imageAnalysis() throws IOException {
+    String filePath = "C:/Users/litop/Desktop/47575492_10211475938168631_1870509668166533120_n.jpg";
+    ByteString imageBytes = ByteString.readFrom(new FileInputStream(filePath));
+    Image image = Image.newBuilder().setContent(imageBytes).build();
+    
+    System.out.println(imageBytes.toString());
+
+    Feature feature = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
+    AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
+    List<AnnotateImageRequest> reqs = new ArrayList<>();
+    reqs.add(req);
+
+    ImageAnnotatorClient client = ImageAnnotatorClient.create();
+    BatchAnnotateImagesResponse batchResponse = client.batchAnnotateImages(reqs);
+    List<AnnotateImageResponse> imageResponses = batchResponse.getResponsesList();
+    AnnotateImageResponse imageResponse = imageResponses.get(0);
+
+    if (imageResponse.hasError()) {
+      System.out.println("Error: " + imageResponse.getError().getMessage());
+    }
+
+    for (EntityAnnotation annotation : imageResponse.getLabelAnnotationsList()) {
+      System.out.println(annotation.getDescription() + ": " + annotation.getScore());
+    }
+
+    client.close();
+
   }
 
   private byte[] getBlobBytes(BlobstoreService blobstoreService, BlobKey blobKey)
