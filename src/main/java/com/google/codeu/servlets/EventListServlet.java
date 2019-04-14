@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** Servlet that will initiate whenever a user goes to the event list page. */
 @WebServlet("/event-list")
@@ -33,6 +35,15 @@ public class EventListServlet extends HttpServlet {
       Iterator it = events.iterator();
       while (it.hasNext()) {
         Event e = (Event) it.next();
+        // String description = e.getDescription();
+        // String regex = "(#\\w+)";
+
+        // Pattern p = Pattern.compile(regex);
+        // Matcher m = p.matcher(description);
+        // while (m.find()) {
+        //   String hashtag = m.group(1);
+        //   System.out.println("hash: " + hashtag);
+        // }
         if (!e.getDescription().contains(tag)) {
           it.remove();
         }
