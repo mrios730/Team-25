@@ -31,7 +31,7 @@ public class EventListServlet extends HttpServlet {
     String tag = request.getParameter("tags");
 
     List<Event> events = datastore.getAllEvents();
-    if (tag != null){
+    if (tag != null) {
       // Split query into separate words using a comma as a delimiter.
       String[] tags = tag.split(",");
       for (int i = 0; i < tags.length; i++) {
