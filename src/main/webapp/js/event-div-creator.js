@@ -1,6 +1,5 @@
 // Fetch messages and add them to the page.
 function fetchEvents(){
-  const url = "/event-list";
   const urlParams = new URLSearchParams(location.search); 
   const url = "/event-list?" + urlParams;
   fetch(url).then((response) => {

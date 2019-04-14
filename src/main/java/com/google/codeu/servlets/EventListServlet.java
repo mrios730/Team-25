@@ -35,16 +35,24 @@ public class EventListServlet extends HttpServlet {
       Iterator it = events.iterator();
       while (it.hasNext()) {
         Event e = (Event) it.next();
-        // String description = e.getDescription();
-        // String regex = "(#\\w+)";
+        String description = e.getDescription();
+        String regex = "(#\\w+)";
 
-        // Pattern p = Pattern.compile(regex);
-        // Matcher m = p.matcher(description);
-        // while (m.find()) {
-        //   String hashtag = m.group(1);
-        //   System.out.println("hash: " + hashtag);
-        // }
-        if (!e.getDescription().contains(tag)) {
+        // Retrieve all hashtags in the description
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(description);
+        boolean hashtagExists = false;
+
+        // Iterate through all hashtag terms and only remove
+        // events that do not have the hashtag in its description.
+        while (m.find()) {
+          String hashtag = m.group(1);
+          if (hashtag.substring(1).equals(tag)) {
+            hashtagExists = true;
+            break;
+          }
+        }
+        if (!hashtagExists) {
           it.remove();
         }
       }
