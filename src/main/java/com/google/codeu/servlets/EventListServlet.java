@@ -31,32 +31,38 @@ public class EventListServlet extends HttpServlet {
     String tag = request.getParameter("tags");
 
     List<Event> events = datastore.getAllEvents();
-    if (tag != null) { 
-      Iterator it = events.iterator();
-      while (it.hasNext()) {
-        Event e = (Event) it.next();
-        String description = e.getDescription();
-        String regex = "(#\\w+)";
+    if (tag != null){
+      // Split query into separate words using a comma as a delimiter.
+      String[] tags = tag.split(",");
+      for (int i = 0; i < tags.length; i++) {
+        String currTag = tags[i]; 
+        Iterator it = events.iterator();
+        while (it.hasNext()) {
+          Event e = (Event) it.next();
+          String description = e.getDescription();
+          String regex = "(#\\w+)";
 
-        // Retrieve all hashtags in the description
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(description);
-        boolean hashtagExists = false;
+          // Retrieve all hashtags in the description
+          Pattern p = Pattern.compile(regex);
+          Matcher m = p.matcher(description);
+          boolean hashtagExists = false;
 
-        // Iterate through all hashtag terms and only remove
-        // events that do not have the hashtag in its description.
-        while (m.find()) {
-          String hashtag = m.group(1);
-          if (hashtag.substring(1).equals(tag)) {
-            hashtagExists = true;
-            break;
+          // Iterate through all hashtag terms and only remove
+          // events that do not have the hashtag in its description.
+          while (m.find()) {
+            String hashtag = m.group(1);
+            if (hashtag.substring(1).equals(currTag)) {
+              hashtagExists = true;
+              break;
+            }
           }
-        }
-        if (!hashtagExists) {
-          it.remove();
+          if (!hashtagExists) {
+            it.remove();
+          }
         }
       }
     }
+    
     Gson gson = new Gson();
     String json = gson.toJson(events);
     response.getWriter().println(json);
