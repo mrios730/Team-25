@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +35,24 @@ public class EventListServlet extends HttpServlet {
       Iterator it = events.iterator();
       while (it.hasNext()) {
         Event e = (Event) it.next();
-        if (!e.getDescription().contains(tag)) {
+        String description = e.getDescription();
+        String regex = "(#\\w+)";
+
+        // Retrieve all hashtags in the description
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(description);
+        boolean hashtagExists = false;
+
+        // Iterate through all hashtag terms and only remove
+        // events that do not have the hashtag in its description.
+        while (m.find()) {
+          String hashtag = m.group(1);
+          if (hashtag.substring(1).equals(tag)) {
+            hashtagExists = true;
+            break;
+          }
+        }
+        if (!hashtagExists) {
           it.remove();
         }
       }
