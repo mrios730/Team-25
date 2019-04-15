@@ -6,8 +6,9 @@
 	<link rel="stylesheet" href="/css/user-page.css">
 	<script src="/js/navigation-loader.js"></script>
 	<script src="/js/event-div-creator.js"></script>
+  <script src="/js/tag-box-creator.js"></script>
 </head>
-<body onload="addLoginOrLogoutLinkToNavigation(); buildUI();">
+<body onload="addLoginOrLogoutLinkToNavigation(); buildTagBox(); buildUI();">
   <nav>
     <ul id="navigation">
       <li><a href="/">Home</a></li>
@@ -16,6 +17,9 @@
  <div id="content">
   <h1>Event List</h1>
   <hr/>
+  <h3>Tags:</h3>
+  <div id="tag-container">Loading tags...</div>
+  <h3>Events:</h3>
   <div id="event-container">Loading...</div>
  </div>
 </body>
