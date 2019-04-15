@@ -39,12 +39,11 @@ public class EventTagServlet extends HttpServlet {
 
       String regex = "(#\\w+)";
 
-      // Retrieve all hashtags in the descriptions
       Pattern p = Pattern.compile(regex);
       Matcher m = p.matcher(description);
 
       while (m.find()) {
-        tags.add(m.group(1));
+        tags.add(m.group(1).substring(1));
       }
     }
     Gson gson = new Gson();

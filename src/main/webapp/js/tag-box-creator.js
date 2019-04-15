@@ -12,7 +12,6 @@ function fetchTags(){
      tagContainer.innerHTML = '';  
     }
     tags.forEach((tag) => {
-     //const tagDiv = buildTagDiv(tag);
      tagContainer.appendChild(createListItem(createLink('/event-list.html?tags=' + tag, tag)));
     });
   });
