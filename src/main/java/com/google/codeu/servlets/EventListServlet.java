@@ -31,7 +31,7 @@ public class EventListServlet extends HttpServlet {
     String tag = request.getParameter("tags");
 
     List<Event> events = datastore.getAllEvents();
-    if (tag != null) { 
+    if (tag != null) {
       Iterator it = events.iterator();
       while (it.hasNext()) {
         Event e = (Event) it.next();
