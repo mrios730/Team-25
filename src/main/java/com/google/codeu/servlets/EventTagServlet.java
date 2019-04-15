@@ -31,7 +31,7 @@ public class EventTagServlet extends HttpServlet {
     response.setContentType("application/json");
     List<Event> events = datastore.getAllEvents();
     List<String> tags = new ArrayList<>();
-    
+
     Iterator it = events.iterator();
     while (it.hasNext()) {
       Event e = (Event) it.next();
