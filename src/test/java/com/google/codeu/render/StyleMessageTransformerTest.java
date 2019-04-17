@@ -24,8 +24,8 @@ public class StyleMessageTransformerTest {
     runTransformTextTest("[b]", "<strong>");
     runTransformTextTest("", "");
     runTransformTextTest(
-      "Checking that [i]this[/i] is italicized",
-      "Checking that <i>this</i> is italicized");
+        "Checking that [i]this[/i] is italicized",
+        "Checking that <i>this</i> is italicized");
     runTransformTextTest("This has no markup.", "This has no markup.");
   }
 }
