@@ -51,7 +51,7 @@ public class EventListServlet extends HttpServlet {
           // events that do not have the hashtag in its description.
           while (m.find()) {
             String hashtag = m.group(1);
-            if (hashtag.equals(currTag)) {
+            if (hashtag.substring(1).equals(currTag)) {
               hashtagExists = true;
               break;
             }
