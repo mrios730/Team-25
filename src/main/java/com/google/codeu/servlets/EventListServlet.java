@@ -40,7 +40,7 @@ public class EventListServlet extends HttpServlet {
         while (it.hasNext()) {
           Event e = (Event) it.next();
           String description = e.getDescription();
-          String regex = "(#\\w+)";
+          String regex = "#(\\w+)";
 
           // Retrieve all hashtags in the description
           Pattern p = Pattern.compile(regex);
@@ -51,7 +51,7 @@ public class EventListServlet extends HttpServlet {
           // events that do not have the hashtag in its description.
           while (m.find()) {
             String hashtag = m.group(1);
-            if (hashtag.substring(1).equals(currTag)) {
+            if (hashtag.equals(currTag)) {
               hashtagExists = true;
               break;
             }
