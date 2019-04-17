@@ -42,12 +42,6 @@ public class EventFormServlet extends HttpServlet {
   /* Stores a new {@link Event}.*/
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    UserService userService = UserServiceFactory.getUserService();
-    if (!userService.isUserLoggedIn()) {
-      response.sendRedirect("/index.html");
-      return;
-    }
-
     String eventName = request.getParameter("eventName");
     String description = request.getParameter("description");
     String organizerNames = request.getParameter("organizerNames");
