@@ -54,7 +54,8 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
     messageTransformer =
         new SequentialMessageTransformer(Arrays.asList(new EmojiMessageTransformer(),
-                                                       new ImageUrlMessageTransformer(), new StyleMessageTransformer()));
+                                                       new ImageUrlMessageTransformer(),
+                                                        new StyleMessageTransformer()));
   }
 
   public void setDatastore(Datastore datastore) {
