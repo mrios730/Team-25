@@ -30,6 +30,7 @@ import com.google.codeu.render.EmojiMessageTransformer;
 import com.google.codeu.render.ImageUrlMessageTransformer;
 import com.google.codeu.render.MessageTransformer;
 import com.google.codeu.render.SequentialMessageTransformer;
+import com.google.codeu.render.StyleMessageTransformer;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Arrays;
@@ -53,7 +54,8 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
     messageTransformer =
         new SequentialMessageTransformer(Arrays.asList(new EmojiMessageTransformer(),
-                                                       new ImageUrlMessageTransformer()));
+                                                       new ImageUrlMessageTransformer(),
+                                                        new StyleMessageTransformer()));
   }
 
   public void setDatastore(Datastore datastore) {
@@ -62,23 +64,6 @@ public class MessageServlet extends HttpServlet {
 
   public void setMessageTransformer(MessageTransformer messageTransformer) {
     this.messageTransformer = messageTransformer;
-  }
-
-  /**
-   * Replaces messages with image links in order to display images properly. TODO: Migrate the code
-   * here to MessageTransformer implementations and delete this method.
-   */
-  public void prepareMessageForDisplay(Message message) {
-    // makes text bold
-    String text = message.getText();
-    text = text.replace("[b]", "<strong>").replace("[/b]", "</strong>");
-    // makes text italic
-    text = text.replace("[i]", "<i>").replace("[/i]", "</i>");
-    // underlines text
-    text = text.replace("[u]", "<ins>").replace("[/u]", "</ins>");
-    // creates a strikethrough on text
-    text = text.replace("[s]", "<del>").replace("[/s]", "</del>");
-    message.setText(text);
   }
 
   /**
@@ -102,9 +87,6 @@ public class MessageServlet extends HttpServlet {
 
     for (Message m : messages) {
       m.setText(messageTransformer.transformText(m.getText()));
-
-      // TODO: Remove this when prepareMessageForDisplay is deleted.
-      prepareMessageForDisplay(m);
     }
     Gson gson = new Gson();
     String json = gson.toJson(messages);
