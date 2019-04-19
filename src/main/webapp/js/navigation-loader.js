@@ -42,9 +42,6 @@ function addLoginOrLogoutLinkToNavigation() {
               createListItem(createLink('/event-form.html', 'Event Form')));
 
           navigationElement.appendChild(
-              createListItem(createLink('/event-list.html', 'Event List')));
-
-          navigationElement.appendChild(
               createListItem(createLink('/logout', 'Log Out')));
         } else {
           navigationElement.appendChild(
